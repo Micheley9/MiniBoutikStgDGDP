@@ -7,6 +7,8 @@
 package miniboutikstgdgdp.entitys;
 
 import java.util.*;
+import java.sql.ResultSet;
+import miniboutikstgdgdp.entitys.connexionBD.*;
 import miniboutikstgdgdp.entitys.modeleOperationBD.ModeleOperationBD;
 
 /**
@@ -126,7 +128,23 @@ public class Produit extends ModeleOperationBD<Produit> {
     //
     @Override
     public Produit insererUneLigne(Produit ObjIns) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Produit prodO = new Produit();
+        try {
+            String requete = "INSERT INTO Produit (idProduit,nomProduit,codeProduit,prixProdduit,qteStockProduit,fabricantProduit,"
+                    + "fournisseurProduit,idCategorieProd) VALUES ('" + ObjIns.idProduit + "','" + ObjIns.nomProduit + "','" + ObjIns.codeProduit + "','" + ObjIns.prixProdduit + "',"
+                    + "'" + ObjIns.qteStockProduit + "','" + ObjIns.fabricantProduit + "','" + ObjIns.fournisseurProduit + "','" + ObjIns.idCategorieProd + "')";
+            MaConnexionBD konex = new MaConnexionBD();
+            konex.ouvrirConnexion();
+            int testIns = konex.ExecuteurdeRequeteUpdate(requete);
+            konex.fermetureConnexion();
+            //
+            if (testIns>0) {
+                prodO = trouverUn(ObjIns.idProduit);
+            }
+
+        } catch (Exception e) {
+        }
+        return prodO;
     }
 
     @Override
@@ -141,7 +159,36 @@ public class Produit extends ModeleOperationBD<Produit> {
 
     @Override
     public Produit trouverUn(Object cleO) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Produit prodO = new Produit();
+        try {
+            String requete = "SELECT idProduit,nomProduit,codeProduit,prixProdduit,qteStockProduit,fabricantProduit,fournisseurProduit,idCategorieProd "
+                    + "FROM Produit WHERE idProduit = " + cleO;
+            MaConnexionBD konex = new MaConnexionBD();
+            konex.ouvrirConnexion();
+            ResultSet rs = konex.ExecuteurdeRequeteSelect(requete);
+            //
+            boolean  testSelect = false;
+            //
+            while (rs.next()) {   
+                testSelect = true;
+                prodO.setIdProduit(rs.getLong("idProduit"));
+                prodO.setNomProduit(rs.getString("idProduit"));
+                prodO.setCodeProduit(rs.getString("idProduit"));
+                prodO.setPrixProdduit(rs.getDouble("idProduit"));
+                prodO.setQteStockProduit(rs.getInt("idProduit"));
+                prodO.setFabricantProduit(rs.getString("idProduit"));
+                prodO.setFournisseurProduit(rs.getString("idProduit"));
+                int idCat = rs.getInt("idCategorieProd");
+                prodO.setIdCategorieProd(new Categorie().trouverUn(idCat));
+               
+                
+            }
+            if (testSelect = false) {
+                prodO = null;
+            }
+        } catch (Exception e) {
+        }
+        return prodO;
     }
 
     @Override
