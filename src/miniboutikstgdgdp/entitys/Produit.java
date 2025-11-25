@@ -186,6 +186,8 @@ public class Produit extends ModeleOperationBD<Produit> {
             if (testSelect = false) {
                 prodO = null;
             }
+            rs.close();
+            konex.fermetureConnexion();
         } catch (Exception e) {
         }
         return prodO;
