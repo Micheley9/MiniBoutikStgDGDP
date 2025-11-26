@@ -4,13 +4,16 @@
  */
 package miniboutikstgdgdp.entitys;
 
+import java.util.Date;
+
 /**
  *
  * @author HP ELITEBOOK
  */
-public class Categorie {
-    private  int idCategorie;
-    private  String nomCategorie;
-    private String descriptionCategorie;
+public class VenteProduit {
+    //
+    private long  idVenteProd;
+    private  Date dateVenteProd;
+    private double montantVenteProd;
     
 }

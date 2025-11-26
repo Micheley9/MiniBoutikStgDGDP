@@ -4,9 +4,9 @@
  */
 package miniboutikstgdgdp.gui;
 
-import miniboutikstgdgdp.entitys.Produit;
+
 import miniboutikstgdgdp.entitys.Produits;
-import miniboutikstgdgdp.gui.ControleurGui.NouveauProduitPanelControleur;
+
 import miniboutikstgdgdp.gui.ControleurGui.NouveauProduitPanelControleurMonoTbl;
 
 /**

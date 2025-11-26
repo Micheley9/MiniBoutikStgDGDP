@@ -8,9 +8,12 @@ package miniboutikstgdgdp.entitys;
  *
  * @author HP ELITEBOOK
  */
-public class Categorie {
-    private  int idCategorie;
-    private  String nomCategorie;
-    private String descriptionCategorie;
+public class LigneChoix {
+    //
+    private long idLgChx;
+    private int qteLgChx;
+    private double montantpartielLgChx;
+    private Produit idProduitLgChx;
+    private VenteProduit idVenteProduitLgChx;
     
 }

@@ -18,7 +18,6 @@ public class venteProduitPanelControleur {
     public static void chargerCombo(JComboBox<Produits> prodListComboBox) {
         List<Produits> prodList = new Produits().trouverTout();
         //
-        System.out.println("prodList.size() = "+prodList.size());
         for (Produits prod : prodList) {
             prodListComboBox.addItem(prod);
 
