@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
  * @author HP ELITEBOOK
  */
 public class MaConnexionBD {
-     private final String url = "jdbc:mysql://localhost:3306/monotableminiboutik";
+     private final String url = "jdbc:mysql://localhost:3306/mini_boutik_db_vf";
     private final String user = "root";
     private final String pwd = "";
     //

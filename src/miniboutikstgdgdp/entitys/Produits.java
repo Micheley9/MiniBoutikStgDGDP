@@ -220,7 +220,6 @@ public class Produits extends ModeleOperationBD<Produits> {
                 //
                 prodList.add(prodO);
                 //
-
             }
             rs.close();
             kon.fermetureConnexion();
@@ -236,6 +235,21 @@ public class Produits extends ModeleOperationBD<Produits> {
 
     public void setCategorieProduitss(String categorieProduitss) {
         this.categorieProduitss = categorieProduitss;
+    }
+
+    @Override
+    public List<Produits> insererPlusieursLignes(List<Produits> ObjIns) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<Produits> supprimerPlusieursLignes(List<Object> ObjList) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<Produits> trouverPlusieus(Object ObjTrv) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

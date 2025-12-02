@@ -5,9 +5,12 @@
 package miniboutikstgdgdp.gui;
 
 
+import miniboutikstgdgdp.entitys.Categorie;
+import miniboutikstgdgdp.entitys.Produit;
 import miniboutikstgdgdp.entitys.Produits;
-
 import miniboutikstgdgdp.gui.ControleurGui.NouveauProduitPanelControleurMonoTbl;
+
+import miniboutikstgdgdp.gui.ControleurGui.venteProduitPanelControleur;
 
 /**
  *
@@ -15,7 +18,18 @@ import miniboutikstgdgdp.gui.ControleurGui.NouveauProduitPanelControleurMonoTbl;
  */
 public class NouveauProduitPanel extends javax.swing.JPanel {
 
-    private Produits pdtO = new Produits();
+    private Produit pdtO = new Produit();
+    private  Categorie idCat = new Categorie();
+
+    public void setIdCat(Categorie idCat) {
+        this.idCat = idCat;
+    }
+
+    public Categorie getIdCat() {
+        return idCat;
+    }
+    
+    
 
    
     /**
@@ -26,6 +40,8 @@ public class NouveauProduitPanel extends javax.swing.JPanel {
        // NouveauProduitPanelControleur.affichage(categorieProduitComboBox);
        // NouveauProduitPanelControleur.chargerInfosPersonne(listeProduitTable);
        NouveauProduitPanelControleurMonoTbl.afficageSurTable(listeProduitTable);
+        venteProduitPanelControleur.affichageComboBoxOOP(categorieProduitComboBox);
+        
     }
 
     /**
@@ -59,7 +75,8 @@ public class NouveauProduitPanel extends javax.swing.JPanel {
         jLabel7 = new javax.swing.JLabel();
         categorieProduitComboBox = new javax.swing.JComboBox<>();
         fabricantProduitTextField = new javax.swing.JTextField();
-        fournisseurProdTextField = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        descriptionTextArea = new javax.swing.JTextArea();
         jPanel5 = new javax.swing.JPanel();
         RechercheTextField = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
@@ -72,7 +89,7 @@ public class NouveauProduitPanel extends javax.swing.JPanel {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 890, Short.MAX_VALUE)
+            .addGap(0, 837, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,13 +194,17 @@ public class NouveauProduitPanel extends javax.swing.JPanel {
         jLabel6.setText("Fabricant  :");
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel7.setText("Fournisseur : ");
+        jLabel7.setText("Description :");
 
         categorieProduitComboBox.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        categorieProduitComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Fruit", "Autres" }));
         categorieProduitComboBox.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 categorieProduitComboBoxItemStateChanged(evt);
+            }
+        });
+        categorieProduitComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                categorieProduitComboBoxActionPerformed(evt);
             }
         });
         categorieProduitComboBox.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -195,8 +216,9 @@ public class NouveauProduitPanel extends javax.swing.JPanel {
         fabricantProduitTextField.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         fabricantProduitTextField.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        fournisseurProdTextField.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        fournisseurProdTextField.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        descriptionTextArea.setColumns(20);
+        descriptionTextArea.setRows(5);
+        jScrollPane2.setViewportView(descriptionTextArea);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -224,26 +246,14 @@ public class NouveauProduitPanel extends javax.swing.JPanel {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(categorieProduitComboBox, 0, 259, Short.MAX_VALUE)
                     .addComponent(fabricantProduitTextField)
-                    .addComponent(fournisseurProdTextField))
+                    .addComponent(jScrollPane2))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(categorieProduitComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(fabricantProduitTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(fournisseurProdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
@@ -259,8 +269,20 @@ public class NouveauProduitPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(quantiteProduitTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(8, Short.MAX_VALUE))
+                            .addComponent(quantiteProduitTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(categorieProduitComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(fabricantProduitTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         RechercheTextField.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -283,7 +305,7 @@ public class NouveauProduitPanel extends javax.swing.JPanel {
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(17, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(RechercheTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8))
@@ -297,18 +319,15 @@ public class NouveauProduitPanel extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 846, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 846, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 2, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -320,9 +339,9 @@ public class NouveauProduitPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -332,7 +351,7 @@ public class NouveauProduitPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 854, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -344,15 +363,10 @@ public class NouveauProduitPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void sauvegadeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sauvegadeButtonActionPerformed
-        // TODO add your handling code here:
-       // setPdtO(NouveauProduitPanelControleur.creationProduit(nomProduitTextField, codeProduitTextField, prixProduitTextField, quantiteProduitTextField
-             //   , fabricantProduitTextField, fournisseurProdTextField, categorieProduitComboBox));
-            // NouveauProduitPanelControleur.creationProduit2(nomProduitTextField, codeProduitTextField, prixProduitTextField, quantiteProduitTextField, fabricantProduitTextField, 
-               //      fournisseurProdTextField, idCatLabel);
-             //NouveauProduitPanelControleur.chargerInfosPersonne(listeProduitTable);
+      
              
-setPdtO(NouveauProduitPanelControleurMonoTbl.creationProduit(nomProduitTextField, codeProduitTextField, prixProduitTextField, quantiteProduitTextField, fabricantProduitTextField, fournisseurProdTextField, categorieProduitComboBox));
-NouveauProduitPanelControleurMonoTbl.afficageSurTable(listeProduitTable);
+//setPdtO(NouveauProduitPanelControleurMonoTbl.creationProduit(nomProduitTextField, codeProduitTextField, prixProduitTextField, quantiteProduitTextField, fabricantProduitTextField, fournisseurProdTextField, categorieProduitComboBox));
+setPdtO(NouveauProduitPanelControleurMonoTbl.insertionProduit(nomProduitTextField, codeProduitTextField, prixProduitTextField, quantiteProduitTextField, fabricantProduitTextField, descriptionTextArea, categorieProduitComboBox));
     }//GEN-LAST:event_sauvegadeButtonActionPerformed
 
     private void categorieProduitComboBoxKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_categorieProduitComboBoxKeyPressed
@@ -365,14 +379,20 @@ NouveauProduitPanelControleurMonoTbl.afficageSurTable(listeProduitTable);
         // NouveauProduitPanelControleur.affichageSelect(idCatLabel, categorieProduitComboBox);
     }//GEN-LAST:event_categorieProduitComboBoxItemStateChanged
 
+    private void categorieProduitComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categorieProduitComboBoxActionPerformed
+        // TODO add your handling code here:
+       // NouveauProduitPanelControleurMonoTbl.affrichageReccuperationId(categorieProduitComboBox, idCat);
+       NouveauProduitPanelControleurMonoTbl.affrichageReccuperationId(categorieProduitComboBox,idCat);
+    }//GEN-LAST:event_categorieProduitComboBoxActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField RechercheTextField;
-    private javax.swing.JComboBox<String> categorieProduitComboBox;
+    private javax.swing.JComboBox<Categorie> categorieProduitComboBox;
     private javax.swing.JTextField codeProduitTextField;
     private javax.swing.JButton deleteButton;
+    private javax.swing.JTextArea descriptionTextArea;
     private javax.swing.JTextField fabricantProduitTextField;
-    private javax.swing.JTextField fournisseurProdTextField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -387,6 +407,7 @@ NouveauProduitPanelControleurMonoTbl.afficageSurTable(listeProduitTable);
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable listeProduitTable;
     private javax.swing.JTextField nomProduitTextField;
     private javax.swing.JTextField prixProduitTextField;
@@ -395,11 +416,11 @@ NouveauProduitPanelControleurMonoTbl.afficageSurTable(listeProduitTable);
     private javax.swing.JButton upDateButton;
     // End of variables declaration//GEN-END:variables
 
-    public Produits getPdtO() {
+    public Produit getPdtO() {
         return pdtO;
     }
 
-    public void setPdtO(Produits pdtO) {
+    public void setPdtO(Produit pdtO) {
         this.pdtO = pdtO;
     }
 }

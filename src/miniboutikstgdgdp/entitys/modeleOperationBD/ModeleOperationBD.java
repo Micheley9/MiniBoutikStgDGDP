@@ -11,15 +11,21 @@ import java.util.List;
  * @author HP ELITEBOOK
  */
 public abstract class ModeleOperationBD<T> {
-    //INSERER UNE LIGNE
+
+    //
     public abstract T insererUneLigne(T ObjIns);
-    //MODIFIER 
-    public abstract T modifierUneLigne(T ObjMod,Object cleO);
-    //SUPPRESSION
-    public abstract T  supprimerUneLigne(Object cleO);
-    //RECHERCHER
-    public abstract  T trouverUn(Object cleO);
-    //Trouver Tout sans Cle
-    public  abstract List<T> trouverTout();
-    
+    //
+    public abstract List<T> insererPlusieursLignes(List<T> ObjIns);
+    //
+    public abstract T modifierUneLigne(T ObjIns, Object cleO);
+    //
+    public abstract T supprimerUneLigne(Object cleO);
+    //
+    public abstract List<T> supprimerPlusieursLignes(List<Object> ObjList);
+    //
+    public abstract T trouverUn(Object cleO);
+    //
+    public abstract List<T> trouverTout();
+    //
+    public abstract List<T> trouverPlusieus(Object ObjTrv);
 }

@@ -4,16 +4,113 @@
  */
 package miniboutikstgdgdp.entitys;
 
+import java.util.List;
+import miniboutikstgdgdp.entitys.modeleOperationBD.ModeleOperationBD;
+
 /**
  *
  * @author HP ELITEBOOK
  */
-public class LigneChoix {
+public class LigneChoix extends ModeleOperationBD<LigneChoix> {
     //
     private long idLgChx;
     private int qteLgChx;
     private double montantpartielLgChx;
     private Produit idProduitLgChx;
     private VenteProduit idVenteProduitLgChx;
+    //
+
+    public LigneChoix() {
+    }
+
+    public LigneChoix(long idLgChx, int qteLgChx, double montantpartielLgChx, Produit idProduitLgChx, VenteProduit idVenteProduitLgChx) {
+        this.idLgChx = idLgChx;
+        this.qteLgChx = qteLgChx;
+        this.montantpartielLgChx = montantpartielLgChx;
+        this.idProduitLgChx = idProduitLgChx;
+        this.idVenteProduitLgChx = idVenteProduitLgChx;
+    }
+    //
+
+    public long getIdLgChx() {
+        return idLgChx;
+    }
+
+    public void setIdLgChx(long idLgChx) {
+        this.idLgChx = idLgChx;
+    }
+
+    public int getQteLgChx() {
+        return qteLgChx;
+    }
+
+    public void setQteLgChx(int qteLgChx) {
+        this.qteLgChx = qteLgChx;
+    }
+
+    public double getMontantpartielLgChx() {
+        return montantpartielLgChx;
+    }
+
+    public void setMontantpartielLgChx(double montantpartielLgChx) {
+        this.montantpartielLgChx = montantpartielLgChx;
+    }
+
+    public Produit getIdProduitLgChx() {
+        return idProduitLgChx;
+    }
+
+    public void setIdProduitLgChx(Produit idProduitLgChx) {
+        this.idProduitLgChx = idProduitLgChx;
+    }
+
+    public VenteProduit getIdVenteProduitLgChx() {
+        return idVenteProduitLgChx;
+    }
+
+    public void setIdVenteProduitLgChx(VenteProduit idVenteProduitLgChx) {
+        this.idVenteProduitLgChx = idVenteProduitLgChx;
+    }
+
+    @Override
+    public LigneChoix insererUneLigne(LigneChoix ObjIns) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<LigneChoix> insererPlusieursLignes(List<LigneChoix> ObjIns) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public LigneChoix modifierUneLigne(LigneChoix ObjIns, Object cleO) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public LigneChoix supprimerUneLigne(Object cleO) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<LigneChoix> supprimerPlusieursLignes(List<Object> ObjList) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public LigneChoix trouverUn(Object cleO) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<LigneChoix> trouverTout() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<LigneChoix> trouverPlusieus(Object ObjTrv) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
     
 }

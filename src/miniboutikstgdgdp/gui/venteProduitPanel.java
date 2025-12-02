@@ -4,7 +4,9 @@
  */
 package miniboutikstgdgdp.gui;
 
-import miniboutikstgdgdp.entitys.Produits;
+import miniboutikstgdgdp.entitys.LigneChoix;
+import miniboutikstgdgdp.entitys.Produit;
+import miniboutikstgdgdp.entitys.VenteProduit;
 import miniboutikstgdgdp.gui.ControleurGui.venteProduitPanelControleur;
 
 /**
@@ -13,12 +15,35 @@ import miniboutikstgdgdp.gui.ControleurGui.venteProduitPanelControleur;
  */
 public class venteProduitPanel extends javax.swing.JPanel {
 
-    /**
-     * Creates new form venteProduitPanel
-     */
+    VenteProduit ventProd = null;
+    LigneChoix lgChx = null;
+
+    public LigneChoix getLgChx() {
+        return lgChx;
+    }
+
+    public void setLgChx(LigneChoix lgChx) {
+        this.lgChx = lgChx;
+    }
+    
+    
+
+    public VenteProduit getVentProd() {
+        return ventProd;
+    }
+
+    public void setVentProd(VenteProduit ventProd) {
+        this.ventProd = ventProd;
+    }
+    
+    
+
     public venteProduitPanel() {
         initComponents();
-        venteProduitPanelControleur.chargerCombo(produitComboBox);
+        // venteProduitPanelControleur.chargerCombo(produitComboBox);
+        //
+        venteProduitPanelControleur.affichageComboBox2(produitComboBox);
+        venteProduitPanelControleur.dateHeure(dateDuJourLabel);
     }
 
     /**
@@ -43,14 +68,18 @@ public class venteProduitPanel extends javax.swing.JPanel {
         produitComboBox = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        dateVenteDateChooser = new com.toedter.calendar.JDateChooser();
-        montantPayerTextField = new javax.swing.JTextField();
+        montantTotalLabel = new javax.swing.JLabel();
+        ajouterPagnierButton = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        montantPartielLabel = new javax.swing.JLabel();
+        dateDuJourLabel = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
         quantiteSpinner = new javax.swing.JSpinner();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        listeChoixProdTable = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
+        supprimerPagnierButton = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -58,7 +87,7 @@ public class venteProduitPanel extends javax.swing.JPanel {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("VENTE PRODUITS");
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Info Produit", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("Produit");
@@ -96,22 +125,22 @@ public class venteProduitPanel extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3)
                             .addComponent(jLabel5))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(categorieLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                            .addComponent(prixProdLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(produitComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(prixProdLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(categorieLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(produitComboBox, 0, 162, Short.MAX_VALUE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addGap(18, 18, 18)
-                        .addComponent(qteProdLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(93, Short.MAX_VALUE))
+                        .addComponent(qteProdLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -135,77 +164,139 @@ public class venteProduitPanel extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Information de la vente"));
 
         jLabel9.setText("Date ");
 
+        jLabel11.setText("Motant à payer");
+
+        montantTotalLabel.setFont(new java.awt.Font("Rockwell Condensed", 1, 14)); // NOI18N
+        montantTotalLabel.setForeground(new java.awt.Color(255, 0, 0));
+        montantTotalLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        montantTotalLabel.setText("---");
+
+        ajouterPagnierButton.setFont(new java.awt.Font("PMingLiU-ExtB", 1, 14)); // NOI18N
+        ajouterPagnierButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/miniboutikstgdgdp/image/ajouter-au-panier.png"))); // NOI18N
+        ajouterPagnierButton.setText("Ajouter au Panier");
+        ajouterPagnierButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ajouterPagnierButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Montant Partiel");
+
+        montantPartielLabel.setText("---");
+
+        dateDuJourLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        dateDuJourLabel.setForeground(new java.awt.Color(0, 0, 153));
+        dateDuJourLabel.setText("---");
+
         jLabel10.setText("Qte à payer");
 
-        jLabel11.setText("Motant à payer");
+        quantiteSpinner.setValue(1);
+        quantiteSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                quantiteSpinnerStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel11)
                     .addComponent(jLabel9)
+                    .addComponent(jLabel4)
                     .addComponent(jLabel10))
+                .addGap(46, 46, 46)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(montantPayerTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(dateDuJourLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(quantiteSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel11)
+                                .addGap(59, 59, 59))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addComponent(ajouterPagnierButton)
+                                .addGap(14, 14, 14))))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(quantiteSpinner)
-                            .addComponent(dateVenteDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(64, 64, 64))
+                        .addComponent(montantPartielLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(montantTotalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(46, 46, 46))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel9)
-                    .addComponent(dateVenteDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel11))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(dateDuJourLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9))))
+                .addGap(7, 7, 7)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel10)
-                    .addComponent(quantiteSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(montantTotalLabel)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4)
+                        .addComponent(montantPartielLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(11, 11, 11)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(montantPayerTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(ajouterPagnierButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(quantiteSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10))
+                .addGap(10, 10, 10))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        listeChoixProdTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "N°", "Nom", "Prix", "Qte", "Montant ", "Select"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(listeChoixProdTable);
 
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        supprimerPagnierButton.setFont(new java.awt.Font("PMingLiU-ExtB", 1, 14)); // NOI18N
+        supprimerPagnierButton.setForeground(new java.awt.Color(255, 0, 0));
+        supprimerPagnierButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/miniboutikstgdgdp/image/supprimer-le-panier.png"))); // NOI18N
+        supprimerPagnierButton.setText("Supprimer dans le Panier");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(supprimerPagnierButton)
+                .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 56, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(supprimerPagnierButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(15, 15, 15))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -234,10 +325,10 @@ public class venteProduitPanel extends javax.swing.JPanel {
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -251,27 +342,42 @@ public class venteProduitPanel extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void produitComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_produitComboBoxActionPerformed
         // TODO add your handling code here:
-        venteProduitPanelControleur.affichqgeInfoProd(produitComboBox, categorieLabel, qteProdLabel, prixProdLabel);
+        //
+        //venteProduitPanelControleur.affichqgeInfoProd(produitComboBox, categorieLabel, qteProdLabel, prixProdLabel);
+        //
+        venteProduitPanelControleur.affichageSelected(produitComboBox, categorieLabel, qteProdLabel, prixProdLabel);
     }//GEN-LAST:event_produitComboBoxActionPerformed
+
+    private void quantiteSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_quantiteSpinnerStateChanged
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_quantiteSpinnerStateChanged
+
+    private void ajouterPagnierButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajouterPagnierButtonActionPerformed
+        // TODO add your handling code here:
+        ventProd =venteProduitPanelControleur.chargerLePanier(produitComboBox, categorieLabel, qteProdLabel, prixProdLabel, quantiteSpinner, listeChoixProdTable, dateDuJourLabel, ventProd, montantTotalLabel, montantPartielLabel);
+    }//GEN-LAST:event_ajouterPagnierButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton ajouterPagnierButton;
     private javax.swing.JLabel categorieLabel;
-    private com.toedter.calendar.JDateChooser dateVenteDateChooser;
+    private javax.swing.JLabel dateDuJourLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
@@ -280,11 +386,13 @@ public class venteProduitPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField montantPayerTextField;
+    private javax.swing.JTable listeChoixProdTable;
+    private javax.swing.JLabel montantPartielLabel;
+    private javax.swing.JLabel montantTotalLabel;
     private javax.swing.JLabel prixProdLabel;
-    private javax.swing.JComboBox<Produits> produitComboBox;
+    private javax.swing.JComboBox<Produit> produitComboBox;
     private javax.swing.JLabel qteProdLabel;
     private javax.swing.JSpinner quantiteSpinner;
+    private javax.swing.JButton supprimerPagnierButton;
     // End of variables declaration//GEN-END:variables
 }
