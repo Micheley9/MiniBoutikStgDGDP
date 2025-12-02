@@ -7,10 +7,12 @@ package miniboutikstgdgdp.gui.ControleurGui;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import static java.util.Collections.list;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import miniboutikstgdgdp.entitys.Categorie;
@@ -18,7 +20,6 @@ import miniboutikstgdgdp.entitys.LigneChoix;
 import miniboutikstgdgdp.entitys.Produit;
 import miniboutikstgdgdp.entitys.Produits;
 import miniboutikstgdgdp.entitys.VenteProduit;
-import miniboutikstgdgdp.entitys.autres.DateTraitement;
 
 /**
  *
@@ -115,27 +116,27 @@ public class venteProduitPanelControleur {
         prixpatielLabel.setText("" + lc.getMontantpartielLgChx());
         //
         //
-        List <LigneChoix> ligneChoixList = ventProd.getLigneChoixVenteList();
+        List<LigneChoix> ligneChoixList = ventProd.getLigneChoixVenteList();
         //
         int nL = ligneChoixList.size();
         int nC = 6;
-        Object dataVnt [][] = new Object[nL][nC];
+        Object dataVnt[][] = new Object[nL][nC];
         //
         //
         int cpt = 0;
         for (LigneChoix lChx : ligneChoixList) {
             //
-            dataVnt[cpt][0]=(ic+1);
-            dataVnt[cpt][1]=lChx.getIdProduitLgChx();
-            dataVnt[cpt][2]=lChx.getIdProduitLgChx().getPrixProdduit();
-            dataVnt[cpt][3]=lChx.getQteLgChx();
-            dataVnt[cpt][4]=lChx.getMontantpartielLgChx();
-            dataVnt[cpt][5]= false;
-            cpt ++;
+            dataVnt[cpt][0] = (cpt + 1);
+            dataVnt[cpt][1] = lChx.getIdProduitLgChx();
+            dataVnt[cpt][2] = lChx.getIdProduitLgChx().getPrixProdduit();
+            dataVnt[cpt][3] = lChx.getQteLgChx();
+            dataVnt[cpt][4] = lChx.getMontantpartielLgChx();
+            dataVnt[cpt][5] = false;
+            cpt++;
         }
         //
         listeChoixProdTable.setModel(new javax.swing.table.DefaultTableModel(
-               dataVnt,
+                dataVnt,
                 new String[]{
                     "N°", "Nom", "Prix", "Qte", "Montant ", "Select"
                 }
@@ -151,5 +152,60 @@ public class venteProduitPanelControleur {
 
         return ventProd;
 
+    }
+
+    public static VenteProduit chargerLePanier(JTable listeChoixProdTable, VenteProduit ventProd) {
+
+        List<Integer> listIndexSuppr = new ArrayList<>();
+        //
+        int nlt = listeChoixProdTable.getRowCount();
+        //
+        for (int i = 0; i < nlt; i++) {
+            if (((boolean) listeChoixProdTable.getValueAt(i, 5)) == true) {
+                listIndexSuppr.add(i);
+            }
+        }
+        List<LigneChoix> ligneChoixList = ventProd.getLigneChoixVenteList();
+        //
+        if(listIndexSuppr.isEmpty()){
+            JOptionPane.showMessageDialog(null, "Aucune ligne selectonnée!!");
+        }else{
+            JOptionPane.showConfirmDialog(null, "Voulez-vous supprimer cette(ces) "+listIndexSuppr.size()+" ligne(s)" );
+        }
+        List<LigneChoix> ligneChoixList1 = ventProd.getLigneChoixVenteList();
+        //
+        int nL = ligneChoixList.size();
+        int nC = 6;
+        Object dataVnt[][] = new Object[nL][nC];
+        //
+        //
+        int cpt = 0;
+        for (LigneChoix lChx : ligneChoixList) {
+            //
+            dataVnt[cpt][0] = (cpt + 1);
+            dataVnt[cpt][1] = lChx.getIdProduitLgChx();
+            dataVnt[cpt][2] = lChx.getIdProduitLgChx().getPrixProdduit();
+            dataVnt[cpt][3] = lChx.getQteLgChx();
+            dataVnt[cpt][4] = lChx.getMontantpartielLgChx();
+            dataVnt[cpt][5] = false;
+            cpt++;
+        }
+        //
+        listeChoixProdTable.setModel(new javax.swing.table.DefaultTableModel(
+                dataVnt,
+                new String[]{
+                    "N°", "Nom", "Prix", "Qte", "Montant ", "Select"
+                }
+        ) {
+            Class[] types = new Class[]{
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types[columnIndex];
+            }
+        });
+
+        return ventProd;
     }
 }

@@ -215,6 +215,7 @@ public class Produit extends ModeleOperationBD<Produit> {
                 prodO.setDescriptionProduit(rs.getString("descriptionProduit"));
                 int idCat = rs.getInt("idCategorieProduit");
                 prodO.setIdCategorieProduit(new Categorie().trouverUn(idCat));
+                //
                 prodList.add(prodO);
             }
             rs.close();

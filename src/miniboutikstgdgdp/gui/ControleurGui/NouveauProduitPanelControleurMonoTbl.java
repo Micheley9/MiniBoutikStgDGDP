@@ -95,23 +95,19 @@ public class NouveauProduitPanelControleurMonoTbl {
 
     }
 
-    public static void affrichageReccuperationId(JComboBox<Categorie> listeCategirueBox,Categorie cleo) {
-        
-       
+    public static void affrichageReccuperationId(JComboBox<Categorie> listeCategirueBox, Categorie cleo) {
+
         Categorie selectionCombo = (Categorie) listeCategirueBox.getSelectedItem();
-      cleo. setIdCategorie(selectionCombo.getIdCategorie());
-         
-        
+        cleo.setIdCategorie(selectionCombo.getIdCategorie());
+
     }
-       
-    
 
     public static Produit insertionProduit(JTextField nomProdTextField, JTextField codeProdTextField, JTextField prixProdTextField,
             JTextField qteProdTextField, JTextField fabicantProTextField, JTextArea descrpritionTextArea, JComboBox<Categorie> idCatSelectedBox) {
         double prixProd = Double.parseDouble(prixProdTextField.getText());
         int qteProd = Integer.parseInt(qteProdTextField.getText());
-        
-
+        //
+        Categorie idCategorie =new Categorie();
         //
         Produit prodO = new Produit();
         //
@@ -119,13 +115,13 @@ public class NouveauProduitPanelControleurMonoTbl {
         prodO.setIdProduit(idProd);
         prodO.setNomProduit(nomProdTextField.getText());
         prodO.setCodeProduit(codeProdTextField.getText());
-        prodO.setIdCategorieProduit((Categorie) idCatSelectedBox.getSelectedItem());
+        prodO.setIdCategorieProduit(new Categorie().trouverUn(idCatSelectedBox));
         prodO.setPrixProdduit(prixProd);
         prodO.setQteStockProduit(qteProd);
         prodO.setFabricantProduit(fabicantProTextField.getText());
         prodO.setDescriptionProduit(descrpritionTextArea.getText());
         //
-         Produit prodOIns = new Produit();
+        Produit prodOIns = new Produit();
         //
         prodO = prodOIns.insererUneLigne(prodO);
 
@@ -135,8 +131,16 @@ public class NouveauProduitPanelControleurMonoTbl {
         } else {
             JOptionPane.showMessageDialog(null, "insertion reusi");
         }
-        
-        return  prodO;
 
+        return prodO;
+
+    }
+
+    public static void recupeurIdCategorie(JComboBox<Categorie> prodComboBox, JLabel idCategorie) {
+        Categorie selectedProduit = (Categorie) prodComboBox.getSelectedItem();
+       
+        //
+        idCategorie.setText(""+selectedProduit.getIdCategorie());
+       
     }
 }
