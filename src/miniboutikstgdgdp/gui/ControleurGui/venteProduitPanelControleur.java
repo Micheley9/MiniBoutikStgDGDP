@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import static java.util.Collections.list;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -165,46 +166,72 @@ public class venteProduitPanelControleur {
                 listIndexSuppr.add(i);
             }
         }
-        List<LigneChoix> ligneChoixList = ventProd.getLigneChoixVenteList();
         //
-        if(listIndexSuppr.isEmpty()){
+        if (listIndexSuppr.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Aucune ligne selectonnée!!");
-        }else{
-            JOptionPane.showConfirmDialog(null, "Voulez-vous supprimer cette(ces) "+listIndexSuppr.size()+" ligne(s)" );
-        }
-        List<LigneChoix> ligneChoixList1 = ventProd.getLigneChoixVenteList();
-        //
-        int nL = ligneChoixList.size();
-        int nC = 6;
-        Object dataVnt[][] = new Object[nL][nC];
-        //
-        //
-        int cpt = 0;
-        for (LigneChoix lChx : ligneChoixList) {
+        } else {
+            int rep = JOptionPane.showConfirmDialog(null, "Voulez-vous supprimer cette(ces) " + listIndexSuppr.size() + " ligne(s)", "Attention ", JOptionPane.YES_NO_OPTION);
             //
-            dataVnt[cpt][0] = (cpt + 1);
-            dataVnt[cpt][1] = lChx.getIdProduitLgChx();
-            dataVnt[cpt][2] = lChx.getIdProduitLgChx().getPrixProdduit();
-            dataVnt[cpt][3] = lChx.getQteLgChx();
-            dataVnt[cpt][4] = lChx.getMontantpartielLgChx();
-            dataVnt[cpt][5] = false;
-            cpt++;
-        }
-        //
-        listeChoixProdTable.setModel(new javax.swing.table.DefaultTableModel(
-                dataVnt,
-                new String[]{
-                    "N°", "Nom", "Prix", "Qte", "Montant ", "Select"
+            if (rep == JOptionPane.YES_OPTION) {
+                List<LigneChoix> ligneChoixList = ventProd.getLigneChoixVenteList();
+                //
+                HashMap<Integer, LigneChoix> hmListLChx = new HashMap<>();
+                //
+                int icpt = 0;
+                for (LigneChoix lCh : ligneChoixList) {
+                    hmListLChx.put(icpt, lCh);
+                    icpt++;
                 }
-        ) {
-            Class[] types = new Class[]{
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
-            };
+                //
+                for (int idx : listIndexSuppr) {
+                    hmListLChx.remove(idx);
+                }
+                //
+                ligneChoixList = new ArrayList<>();
+                if (!hmListLChx.isEmpty()) {
+                    for (LigneChoix lc : hmListLChx.values()) {
+                        ligneChoixList.add(lc);
+                    }
+                } else {
+                }
+                //
+                ventProd.setLigneChoixVenteList(ligneChoixList);
+                //
+                List<LigneChoix> ligneChoixList1 = ventProd.getLigneChoixVenteList();
+                //
+                int nL = ligneChoixList1.size();
+                int nC = 6;
+                Object dataVnt[][] = new Object[nL][nC];
+                //
+                //
+                int cpt = 0;
+                for (LigneChoix lChx : ligneChoixList1) {
+                    //
+                    dataVnt[cpt][0] = (cpt + 1);
+                    dataVnt[cpt][1] = lChx.getIdProduitLgChx();
+                    dataVnt[cpt][2] = lChx.getIdProduitLgChx().getPrixProdduit();
+                    dataVnt[cpt][3] = lChx.getQteLgChx();
+                    dataVnt[cpt][4] = lChx.getMontantpartielLgChx();
+                    dataVnt[cpt][5] = false;
+                    cpt++;
+                }
+                //
+                listeChoixProdTable.setModel(new javax.swing.table.DefaultTableModel(
+                        dataVnt,
+                        new String[]{
+                            "N°", "Nom", "Prix", "Qte", "Montant ", "Select"
+                        }
+                ) {
+                    Class[] types = new Class[]{
+                        java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
+                    };
 
-            public Class getColumnClass(int columnIndex) {
-                return types[columnIndex];
+                    public Class getColumnClass(int columnIndex) {
+                        return types[columnIndex];
+                    }
+                });
             }
-        });
+        }
 
         return ventProd;
     }

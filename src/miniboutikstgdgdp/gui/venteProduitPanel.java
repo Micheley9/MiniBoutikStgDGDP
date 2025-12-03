@@ -80,6 +80,7 @@ public class venteProduitPanel extends javax.swing.JPanel {
         listeChoixProdTable = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
         supprimerPagnierButton = new javax.swing.JButton();
+        supprimerPagnierButton1 = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -281,22 +282,38 @@ public class venteProduitPanel extends javax.swing.JPanel {
         supprimerPagnierButton.setForeground(new java.awt.Color(255, 0, 0));
         supprimerPagnierButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/miniboutikstgdgdp/image/supprimer-le-panier.png"))); // NOI18N
         supprimerPagnierButton.setText("Supprimer dans le Panier");
+        supprimerPagnierButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                supprimerPagnierButtonActionPerformed(evt);
+            }
+        });
+
+        supprimerPagnierButton1.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 14)); // NOI18N
+        supprimerPagnierButton1.setForeground(new java.awt.Color(0, 204, 0));
+        supprimerPagnierButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/miniboutikstgdgdp/image/valider vente.png"))); // NOI18N
+        supprimerPagnierButton1.setText("Valider la vente");
+        supprimerPagnierButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                supprimerPagnierButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(41, 41, 41)
+                .addComponent(supprimerPagnierButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(supprimerPagnierButton)
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(supprimerPagnierButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(15, 15, 15))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(supprimerPagnierButton1)
+                .addComponent(supprimerPagnierButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -367,6 +384,15 @@ public class venteProduitPanel extends javax.swing.JPanel {
         ventProd =venteProduitPanelControleur.chargerLePanier(produitComboBox, categorieLabel, qteProdLabel, prixProdLabel, quantiteSpinner, listeChoixProdTable, dateDuJourLabel, ventProd, montantTotalLabel, montantPartielLabel);
     }//GEN-LAST:event_ajouterPagnierButtonActionPerformed
 
+    private void supprimerPagnierButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supprimerPagnierButtonActionPerformed
+        // TODO add your handling code here:
+        ventProd = venteProduitPanelControleur.chargerLePanier(listeChoixProdTable, ventProd);
+    }//GEN-LAST:event_supprimerPagnierButtonActionPerformed
+
+    private void supprimerPagnierButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supprimerPagnierButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_supprimerPagnierButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ajouterPagnierButton;
@@ -394,5 +420,6 @@ public class venteProduitPanel extends javax.swing.JPanel {
     private javax.swing.JLabel qteProdLabel;
     private javax.swing.JSpinner quantiteSpinner;
     private javax.swing.JButton supprimerPagnierButton;
+    private javax.swing.JButton supprimerPagnierButton1;
     // End of variables declaration//GEN-END:variables
 }
