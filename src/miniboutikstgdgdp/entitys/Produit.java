@@ -119,10 +119,12 @@ public class Produit extends ModeleOperationBD<Produit> {
     @Override
     public Produit insererUneLigne(Produit ObjIns) {
         Produit prodO = new Produit();
+        
         try {
+            long idCat = ObjIns.getIdCategorieProduit().getIdCategorie();
             String requete = "INSERT INTO produit (idProduit, nomProduit, codeProduit, prixProdduit, qteStockProduit, fabricantProduit, descriptionProduit,idCategorieProduit) "
-                    + "VALUES ('" + ObjIns.idProduit + "', '" + ObjIns.nomProduit + "','" + ObjIns.codeProduit + "','" + ObjIns.prixProdduit + "','" + ObjIns.qteStockProduit + "','" + ObjIns.fabricantProduit + "',"
-                    + "'" + ObjIns.descriptionProduit + "','" + ObjIns.idCategorieProduit + "')";
+                    + "VALUES ('" + ObjIns.idProduit + "', '" + ObjIns.getNomProduit() + "','" + ObjIns.getCodeProduit() + "','" + ObjIns.getPrixProdduit() + "','" + ObjIns.getQteStockProduit() + "','" + ObjIns.getFabricantProduit() + "',"
+                    + "'" + ObjIns.getDescriptionProduit() + "','" + idCat+ "')";
             MaConnexionBD konx = new MaConnexionBD();
             konx.ouvrirConnexion();
             int resultReq = konx.ExecuteurdeRequeteUpdate(requete);
@@ -164,7 +166,7 @@ public class Produit extends ModeleOperationBD<Produit> {
     public Produit trouverUn(Object cleO) {
         Produit prodO = new Produit();
         try {
-            String requete = "SELECT idProduit, nomProduit, codeProduit, prixProdduit, qteStockProduit, fabricantProduit, descriptionProduit "
+            String requete = "SELECT idProduit, nomProduit, codeProduit, prixProdduit, qteStockProduit, fabricantProduit, descriptionProduit,idCategorieProduit "
                     + "FROM produit WHERE idProduit = " + cleO;
             MaConnexionBD konex = new MaConnexionBD();
             konex.ouvrirConnexion();

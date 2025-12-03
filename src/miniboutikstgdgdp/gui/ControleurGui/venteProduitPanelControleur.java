@@ -155,7 +155,7 @@ public class venteProduitPanelControleur {
 
     }
 
-    public static VenteProduit chargerLePanier(JTable listeChoixProdTable, VenteProduit ventProd) {
+    public static VenteProduit supprimerDansLePanier(JTable listeChoixProdTable, VenteProduit ventProd) {
 
         List<Integer> listIndexSuppr = new ArrayList<>();
         //
@@ -235,4 +235,5 @@ public class venteProduitPanelControleur {
 
         return ventProd;
     }
+    //
 }

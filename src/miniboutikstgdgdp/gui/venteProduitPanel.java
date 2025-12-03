@@ -386,7 +386,7 @@ public class venteProduitPanel extends javax.swing.JPanel {
 
     private void supprimerPagnierButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supprimerPagnierButtonActionPerformed
         // TODO add your handling code here:
-        ventProd = venteProduitPanelControleur.chargerLePanier(listeChoixProdTable, ventProd);
+        ventProd = venteProduitPanelControleur.supprimerDansLePanier(listeChoixProdTable, ventProd);
     }//GEN-LAST:event_supprimerPagnierButtonActionPerformed
 
     private void supprimerPagnierButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supprimerPagnierButton1ActionPerformed

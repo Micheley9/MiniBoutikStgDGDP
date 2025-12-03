@@ -103,11 +103,19 @@ public class NouveauProduitPanelControleurMonoTbl {
     }
 
     public static Produit insertionProduit(JTextField nomProdTextField, JTextField codeProdTextField, JTextField prixProdTextField,
-            JTextField qteProdTextField, JTextField fabicantProTextField, JTextArea descrpritionTextArea, JComboBox<Categorie> idCatSelectedBox) {
+            JTextField qteProdTextField, JTextField fabicantProTextField, JTextArea descrpritionTextArea, int idCategorieSelectionnee) {
         double prixProd = Double.parseDouble(prixProdTextField.getText());
         int qteProd = Integer.parseInt(qteProdTextField.getText());
         //
-        Categorie idCategorie =new Categorie();
+        // 2. RÉCUPÉRATION DE L'OBJET CATÉGORIE SÉLECTIONNÉ
+           // 2. Vérification de l'ID de catégorie
+        if (idCategorieSelectionnee <= 0) {
+            JOptionPane.showMessageDialog(null, "ID de catégorie invalide. Veuillez sélectionner une catégorie.", "Erreur", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+
+        Categorie categoriePourInsertion = new Categorie();
+        categoriePourInsertion.setIdCategorie(idCategorieSelectionnee);
         //
         Produit prodO = new Produit();
         //
@@ -115,7 +123,7 @@ public class NouveauProduitPanelControleurMonoTbl {
         prodO.setIdProduit(idProd);
         prodO.setNomProduit(nomProdTextField.getText());
         prodO.setCodeProduit(codeProdTextField.getText());
-        prodO.setIdCategorieProduit(new Categorie().trouverUn(idCatSelectedBox));
+        prodO.setIdCategorieProduit(categoriePourInsertion);
         prodO.setPrixProdduit(prixProd);
         prodO.setQteStockProduit(qteProd);
         prodO.setFabricantProduit(fabicantProTextField.getText());
@@ -143,4 +151,5 @@ public class NouveauProduitPanelControleurMonoTbl {
         idCategorie.setText(""+selectedProduit.getIdCategorie());
        
     }
+    
 }

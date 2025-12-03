@@ -5,18 +5,58 @@
 package miniboutikstgdgdp.gui;
 
 
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import miniboutikstgdgdp.entitys.Categorie;
 import miniboutikstgdgdp.entitys.Produit;
 import miniboutikstgdgdp.entitys.Produits;
 import miniboutikstgdgdp.gui.ControleurGui.NouveauProduitPanelControleurMonoTbl;
 
 import miniboutikstgdgdp.gui.ControleurGui.venteProduitPanelControleur;
+import static miniboutikstgdgdp.gui.ControleurGui.venteProduitPanelControleur.affichageComboBoxOOP;
 
 /**
  *
  * @author HP ELITEBOOK
  */
 public class NouveauProduitPanel extends javax.swing.JPanel {
+    //
+
+    
+    //
+    // 1. Déclaration de l'attribut de stockage
+//    private int idCategorieSelectionnee = -1; 
+//    
+// 
+//    public void initialiserEcouteurCategorie(JComboBox<Categorie> categorieComboBox) {
+//        
+//        // 1. Appel de votre méthode pour remplir le ComboBox
+//        affichageComboBoxOOP(categorieComboBox);
+//        
+//        // 2. Ajout de l'écouteur qui met à jour this.idCategorieSelectionnee
+//        categorieComboBox.addItemListener(new ItemListener() {
+//            @Override
+//            public void itemStateChanged(ItemEvent e) {
+//                if (e.getStateChange() == ItemEvent.SELECTED) {
+//                    Categorie categorieSelectionnee = (Categorie) e.getItem();
+//                    int idCat = categorieSelectionnee.getIdCategorie();
+//                    
+//                    // Stockage dans la variable de la classe (FormulaireNouveauProduit.this)
+//                    NouveauProduitPanel.this.idCategorieSelectionnee = idCat; 
+//                    
+//                    System.out.println("ID Catégorie stocké: " + idCategorieSelectionnee);
+//                }
+//            }
+//        });
+//    }
+
+//    // Getter optionnel si vous avez besoin d'y accéder depuis l'extérieur
+//    public int getIdCategorieSelectionnee() {
+//        return idCategorieSelectionnee;
+//    }
+    //
 
     private Produit pdtO = new Produit();
     private  Categorie idCat = new Categorie();
@@ -42,7 +82,7 @@ public class NouveauProduitPanel extends javax.swing.JPanel {
        // NouveauProduitPanelControleur.chargerInfosPersonne(listeProduitTable);
        NouveauProduitPanelControleurMonoTbl.afficageSurTable(listeProduitTable);
         venteProduitPanelControleur.affichageComboBoxOOP(categorieProduitComboBox);
-      
+//      initialiserEcouteurCategorie(categorieProduitComboBox);
         
     }
 
@@ -377,7 +417,25 @@ public class NouveauProduitPanel extends javax.swing.JPanel {
       
              
 //setPdtO(NouveauProduitPanelControleurMonoTbl.creationProduit(nomProduitTextField, codeProduitTextField, prixProduitTextField, quantiteProduitTextField, fabricantProduitTextField, fournisseurProdTextField, categorieProduitComboBox));
-setPdtO(NouveauProduitPanelControleurMonoTbl.insertionProduit(nomProduitTextField, codeProduitTextField, prixProduitTextField, quantiteProduitTextField, fabricantProduitTextField, descriptionTextArea, categorieProduitComboBox));
+//
+Categorie categorieSelectionnee = (Categorie) categorieProduitComboBox.getSelectedItem(); 
+    
+    if (categorieSelectionnee == null) {
+        JOptionPane.showMessageDialog(this, "Veuillez sélectionner une catégorie.", "Erreur", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    
+    // 2. Extraire l'ID numérique
+    int idCatAInserer = categorieSelectionnee.getIdCategorie();
+    
+    // 3. Contrôle de l'ID avant l'appel
+    if (idCatAInserer <= 0) {
+        JOptionPane.showMessageDialog(this, "La catégorie sélectionnée n'a pas d'ID valide.", "Erreur", JOptionPane.ERROR_MESSAGE);
+        return; 
+    }
+//
+setPdtO(NouveauProduitPanelControleurMonoTbl.insertionProduit(nomProduitTextField, codeProduitTextField, prixProduitTextField, quantiteProduitTextField, fabricantProduitTextField, descriptionTextArea, idCatAInserer));
+NouveauProduitPanelControleurMonoTbl.afficageSurTable(listeProduitTable);
     }//GEN-LAST:event_sauvegadeButtonActionPerformed
 
     private void categorieProduitComboBoxKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_categorieProduitComboBoxKeyPressed
