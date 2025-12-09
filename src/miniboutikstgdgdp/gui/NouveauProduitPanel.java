@@ -119,7 +119,6 @@ public class NouveauProduitPanel extends javax.swing.JPanel {
         fabricantProduitTextField = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         descriptionTextArea = new javax.swing.JTextArea();
-        ideCategLabel = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         RechercheTextField = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
@@ -263,8 +262,6 @@ public class NouveauProduitPanel extends javax.swing.JPanel {
         descriptionTextArea.setRows(5);
         jScrollPane2.setViewportView(descriptionTextArea);
 
-        ideCategLabel.setText("----");
-
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -283,12 +280,10 @@ public class NouveauProduitPanel extends javax.swing.JPanel {
                     .addComponent(prixProduitTextField)
                     .addComponent(quantiteProduitTextField))
                 .addGap(96, 96, 96)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(ideCategLabel))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(categorieProduitComboBox, 0, 259, Short.MAX_VALUE)
@@ -329,8 +324,6 @@ public class NouveauProduitPanel extends javax.swing.JPanel {
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(jLabel7)
-                                .addGap(18, 18, 18)
-                                .addComponent(ideCategLabel)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -419,20 +412,8 @@ public class NouveauProduitPanel extends javax.swing.JPanel {
 //setPdtO(NouveauProduitPanelControleurMonoTbl.creationProduit(nomProduitTextField, codeProduitTextField, prixProduitTextField, quantiteProduitTextField, fabricantProduitTextField, fournisseurProdTextField, categorieProduitComboBox));
 //
 Categorie categorieSelectionnee = (Categorie) categorieProduitComboBox.getSelectedItem(); 
-    
-    if (categorieSelectionnee == null) {
-        JOptionPane.showMessageDialog(this, "Veuillez sélectionner une catégorie.", "Erreur", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-    
-    // 2. Extraire l'ID numérique
-    int idCatAInserer = categorieSelectionnee.getIdCategorie();
-    
-    // 3. Contrôle de l'ID avant l'appel
-    if (idCatAInserer <= 0) {
-        JOptionPane.showMessageDialog(this, "La catégorie sélectionnée n'a pas d'ID valide.", "Erreur", JOptionPane.ERROR_MESSAGE);
-        return; 
-    }
+ int idCatAInserer = categorieSelectionnee.getIdCategorie();
+  
 //
 setPdtO(NouveauProduitPanelControleurMonoTbl.insertionProduit(nomProduitTextField, codeProduitTextField, prixProduitTextField, quantiteProduitTextField, fabricantProduitTextField, descriptionTextArea, idCatAInserer));
 NouveauProduitPanelControleurMonoTbl.afficageSurTable(listeProduitTable);
@@ -451,7 +432,7 @@ NouveauProduitPanelControleurMonoTbl.afficageSurTable(listeProduitTable);
     private void categorieProduitComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categorieProduitComboBoxActionPerformed
         // TODO add your handling code here:
        // NouveauProduitPanelControleurMonoTbl.affrichageReccuperationId(categorieProduitComboBox, idCat);
-      NouveauProduitPanelControleurMonoTbl.recupeurIdCategorie(categorieProduitComboBox, ideCategLabel);
+     // NouveauProduitPanelControleurMonoTbl.recupeurIdCategorie(categorieProduitComboBox, ideCategLabel);
     
     }//GEN-LAST:event_categorieProduitComboBoxActionPerformed
 
@@ -463,7 +444,6 @@ NouveauProduitPanelControleurMonoTbl.afficageSurTable(listeProduitTable);
     private javax.swing.JButton deleteButton;
     private javax.swing.JTextArea descriptionTextArea;
     private javax.swing.JTextField fabricantProduitTextField;
-    private javax.swing.JLabel ideCategLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

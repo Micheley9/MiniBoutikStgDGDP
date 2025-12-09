@@ -25,8 +25,6 @@ public class venteProduitPanel extends javax.swing.JPanel {
     public void setLgChx(LigneChoix lgChx) {
         this.lgChx = lgChx;
     }
-    
-    
 
     public VenteProduit getVentProd() {
         return ventProd;
@@ -35,8 +33,6 @@ public class venteProduitPanel extends javax.swing.JPanel {
     public void setVentProd(VenteProduit ventProd) {
         this.ventProd = ventProd;
     }
-    
-    
 
     public venteProduitPanel() {
         initComponents();
@@ -263,15 +259,22 @@ public class venteProduitPanel extends javax.swing.JPanel {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "N°", "Nom", "Prix", "Qte", "Montant ", "Select"
+                "N°", "Nom", "Prix", "Qte", "Montant  Partiel", "Select"
             }
         ) {
             Class[] types = new Class [] {
                 java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, true, true, true, true, true
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         jScrollPane1.setViewportView(listeChoixProdTable);
@@ -381,12 +384,12 @@ public class venteProduitPanel extends javax.swing.JPanel {
 
     private void ajouterPagnierButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajouterPagnierButtonActionPerformed
         // TODO add your handling code here:
-        ventProd =venteProduitPanelControleur.chargerLePanier(produitComboBox, categorieLabel, qteProdLabel, prixProdLabel, quantiteSpinner, listeChoixProdTable, dateDuJourLabel, ventProd, montantTotalLabel, montantPartielLabel);
+        ventProd = venteProduitPanelControleur.chargerLePanier(produitComboBox, categorieLabel, qteProdLabel, prixProdLabel, quantiteSpinner, listeChoixProdTable, dateDuJourLabel, ventProd, montantTotalLabel, montantPartielLabel);
     }//GEN-LAST:event_ajouterPagnierButtonActionPerformed
 
     private void supprimerPagnierButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supprimerPagnierButtonActionPerformed
         // TODO add your handling code here:
-        ventProd = venteProduitPanelControleur.supprimerDansLePanier(listeChoixProdTable, ventProd);
+        ventProd = venteProduitPanelControleur.supprimerDansLePanier2(listeChoixProdTable, ventProd, montantTotalLabel);
     }//GEN-LAST:event_supprimerPagnierButtonActionPerformed
 
     private void supprimerPagnierButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supprimerPagnierButton1ActionPerformed

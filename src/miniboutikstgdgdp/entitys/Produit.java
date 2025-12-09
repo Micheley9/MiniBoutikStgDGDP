@@ -121,7 +121,9 @@ public class Produit extends ModeleOperationBD<Produit> {
         Produit prodO = new Produit();
         
         try {
-            long idCat = ObjIns.getIdCategorieProduit().getIdCategorie();
+            //converture l'idCategorie de Classe à int
+            int idCat = ObjIns.getIdCategorieProduit().getIdCategorie();
+            
             String requete = "INSERT INTO produit (idProduit, nomProduit, codeProduit, prixProdduit, qteStockProduit, fabricantProduit, descriptionProduit,idCategorieProduit) "
                     + "VALUES ('" + ObjIns.idProduit + "', '" + ObjIns.getNomProduit() + "','" + ObjIns.getCodeProduit() + "','" + ObjIns.getPrixProdduit() + "','" + ObjIns.getQteStockProduit() + "','" + ObjIns.getFabricantProduit() + "',"
                     + "'" + ObjIns.getDescriptionProduit() + "','" + idCat+ "')";
@@ -137,7 +139,7 @@ public class Produit extends ModeleOperationBD<Produit> {
             }
             konx.fermetureConnexion();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erreur dans Produit : insererUneLigne\n" + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erreur dans Produit, insererUneLigne : \n" + e.getMessage());
         }
         return prodO;
     }
@@ -149,7 +151,26 @@ public class Produit extends ModeleOperationBD<Produit> {
     
     @Override
     public Produit modifierUneLigne(Produit ObjIns, Object cleO) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+      try {
+            String requete = "UPDATE produit SET "
+                           + "qteStockProduit = " + ObjIns.getQteStockProduit() + ", "
+                           + " WHERE idProduit = " + cleO;
+            
+            MaConnexionBD konx = new MaConnexionBD();
+            konx.ouvrirConnexion();
+            int resultReq = konx.ExecuteurdeRequeteUpdate(requete);
+            konx.fermetureConnexion();
+            
+            if (resultReq > 0) {
+                return ObjIns;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erreur dans Produit : modifierUneLigne\n" + e.getMessage());
+            return null;
+        }
+
     }
     
     @Override
@@ -184,11 +205,11 @@ public class Produit extends ModeleOperationBD<Produit> {
                 int idCat = rs.getInt("idCategorieProduit");
                 //
                 prodO.setIdCategorieProduit(new Categorie().trouverUn(idCat));
-                
             }
+            konex.fermetureConnexion();
             
         } catch (Exception e) {
-            JOptionPane.showConfirmDialog(null, "Erreur dans Produit : trouverUn\n" + e.getMessage());
+            JOptionPane.showConfirmDialog(null, "Erreur dans Produit, trouverUn : \n" + e.getMessage());
         }
         return prodO;
     }
@@ -224,7 +245,7 @@ public class Produit extends ModeleOperationBD<Produit> {
             konx.fermetureConnexion();
             
         } catch (Exception e) {
-            JOptionPane.showConfirmDialog(null, "Erreur dans Produit :trouverTout\n" + e.getMessage());
+            JOptionPane.showConfirmDialog(null, "Erreur dans Produit, trouverTout : \n" + e.getMessage());
         }
         return prodList;
     }
@@ -238,5 +259,13 @@ public class Produit extends ModeleOperationBD<Produit> {
     public String toString() {
         return nomProduit;
     }
+
+    private String getFournisseurProduit() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+//    private String getFournisseurProduit() {
+//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+//    }
     
 }

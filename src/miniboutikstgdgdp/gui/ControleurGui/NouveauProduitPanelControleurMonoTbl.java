@@ -135,21 +135,21 @@ public class NouveauProduitPanelControleurMonoTbl {
 
         //
         if (prodO == null) {
-            JOptionPane.showMessageDialog(null, "Erreur");
+            JOptionPane.showMessageDialog(null, "Erreur lors de l'insertion !");
         } else {
-            JOptionPane.showMessageDialog(null, "insertion reusi");
+            JOptionPane.showMessageDialog(null, "Insertion reussie !");
         }
 
         return prodO;
 
     }
 
-    public static void recupeurIdCategorie(JComboBox<Categorie> prodComboBox, JLabel idCategorie) {
-        Categorie selectedProduit = (Categorie) prodComboBox.getSelectedItem();
-       
-        //
-        idCategorie.setText(""+selectedProduit.getIdCategorie());
-       
-    }
+//    public static void recupeurIdCategorie(JComboBox<Categorie> prodComboBox, JLabel idCategorie) {
+//        Categorie selectedProduit = (Categorie) prodComboBox.getSelectedItem();
+//       
+//        //
+//        idCategorie.setText(""+selectedProduit.getIdCategorie());
+//       
+//    }
     
 }

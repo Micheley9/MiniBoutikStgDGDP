@@ -4,7 +4,10 @@
  */
 package miniboutikstgdgdp.entitys;
 
+import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
+import miniboutikstgdgdp.entitys.connexionBD.MaConnexionBD;
 import miniboutikstgdgdp.entitys.modeleOperationBD.ModeleOperationBD;
 
 /**
@@ -12,6 +15,7 @@ import miniboutikstgdgdp.entitys.modeleOperationBD.ModeleOperationBD;
  * @author HP ELITEBOOK
  */
 public class LigneChoix extends ModeleOperationBD<LigneChoix> {
+
     //
     private long idLgChx;
     private int qteLgChx;
@@ -74,12 +78,40 @@ public class LigneChoix extends ModeleOperationBD<LigneChoix> {
 
     @Override
     public LigneChoix insererUneLigne(LigneChoix ObjIns) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        long idProduit = ObjIns.getIdProduitLgChx().getIdProduit();
+        long idVenteProd = ObjIns.getIdVenteProduitLgChx().getIdVenteProd();
+        try {
+            String requete = "INSERT INTO ligneChoix (qteLgChx, montantpartielLgChx, idProduitLgChx, idVenteProduitLgChx)"
+                    + " VALUES ('"+ObjIns.getIdLgChx()+"','"+ObjIns.getMontantpartielLgChx()+"','"+idProduit+"','"+idVenteProd+"')";
+
+            MaConnexionBD konx = new MaConnexionBD();
+            konx.ouvrirConnexion();
+            int resultReq = konx.ExecuteurdeRequeteUpdate(requete);
+            konx.fermetureConnexion();
+
+            if (resultReq > 0) {
+                return ObjIns;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erreur dans LigneChoix : insererUneLigne \n\n" + e.getMessage());
+            return null;
+        }
+
     }
 
     @Override
     public List<LigneChoix> insererPlusieursLignes(List<LigneChoix> ObjIns) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+       List<LigneChoix> listLigeneV = new ArrayList<>();
+        try {
+            String requete = "INSERT INTO lignechoix (qteLgChx,montantpartielLgChx,idProduitLgChx,idVenteProduitLgChx)";
+                    
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erreur dans LigneChoix : insererPlusieursLignes \n\n" + e.getMessage());
+        }
+       return listLigeneV;
     }
 
     @Override
@@ -111,6 +143,5 @@ public class LigneChoix extends ModeleOperationBD<LigneChoix> {
     public List<LigneChoix> trouverPlusieus(Object ObjTrv) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
-    
+
 }
