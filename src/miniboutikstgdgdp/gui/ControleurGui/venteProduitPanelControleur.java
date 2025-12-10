@@ -129,8 +129,8 @@ public class venteProduitPanelControleur {
         int cpt = 0;
         for (LigneChoix lChx : ligneChoixList) {
             //
-            dataVnt[cpt][0] = (cpt +1);
-            dataVnt[cpt][1] = lChx.getIdProduitLgChx();
+            dataVnt[cpt][0] = (cpt + 1);
+            dataVnt[cpt][1] = lChx.getIdProduitLgChx().getIdProduit();
             dataVnt[cpt][2] = lChx.getIdProduitLgChx().getPrixProdduit();
             dataVnt[cpt][3] = lChx.getQteLgChx();
             dataVnt[cpt][4] = lChx.getMontantpartielLgChx();
@@ -343,7 +343,104 @@ public class venteProduitPanelControleur {
     }
 
     //
-    public static void validerLaVente(JTable listeChoixProdTable, VenteProduit ventePro) {
-        int nlt = listeChoixProdTable.getRowCount();
+    // Version alternative qui insère directement depuis le JTable
+    public static boolean validerVenteDirecte(JTable listeChoixProdTable, VenteProduit ventProd) {
+
+        try {
+            // Créer et insérer la vente
+            if (ventProd == null) {
+                Long idVent = new Date().getTime();
+                ventProd = new VenteProduit();
+                ventProd.setIdVenteProd(idVent);
+                ventProd.setDateVenteProd(new Date());
+                ventProd.setMontantVenteProd(0);
+            }
+            // Calculer le montant total à partir du tableau
+            double montantTotal = 0;
+            DefaultTableModel model = (DefaultTableModel) listeChoixProdTable.getModel();
+
+            for (int i = 0; i < model.getRowCount(); i++) {
+                double montant = Double.parseDouble(model.getValueAt(i, 4).toString());
+                montantTotal += montant;
+            }
+            ventProd.setMontantVenteProd(montantTotal);
+
+            // Insérer la vente
+            VenteProduit venteInseree = ventProd.insererUneLigne(ventProd);
+
+            if (venteInseree == null) {
+                JOptionPane.showMessageDialog(null, "Erreur lors de l'insertion de la vente");
+                return false;
+            }
+
+            //  Parcourir le tableau et insérer les lignes
+            for (int i = 0; i < model.getRowCount(); i++) {
+                try {
+                    long nomProduit = Long.parseLong(model.getValueAt(i, 1).toString());
+                    double prix = Double.parseDouble(model.getValueAt(i, 2).toString());
+                    int quantite = Integer.parseInt(model.getValueAt(i, 3).toString());
+                    double montantPartiel = Double.parseDouble(model.getValueAt(i, 4).toString());
+
+                    // Trouver le produit par son nom
+                    Produit produit = new Produit();
+                    produit.setIdProduit(nomProduit);
+
+                    if (produit != null) {
+                        // Créer et insérer la ligne
+                        LigneChoix ligne = new LigneChoix();
+                        ligne.setQteLgChx(quantite);
+                        ligne.setMontantpartielLgChx(montantPartiel);
+                        ligne.setIdProduitLgChx(produit);
+                        ligne.setIdVenteProduitLgChx(ventProd);
+
+                        LigneChoix ligneInseree = ligne.insererUneLigne(ligne);
+
+                        if (ligneInseree != null) {
+                            // CORRECTION : Mettre à jour le stock correctement
+                            Produit produitPourMaj = new Produit().trouverUn(produit.getIdProduit());
+                            JOptionPane.showMessageDialog(null, "" + produitPourMaj.getQteStockProduit());
+                            if (produitPourMaj != null) {
+                                int stockActuel = produitPourMaj.getQteStockProduit();
+                                int nouveauStock = stockActuel - quantite; // SOUSTRACTION CORRECTE
+
+                                // Vérifier que le stock ne devient pas négatif
+                                if (nouveauStock < 0) {
+                                    JOptionPane.showMessageDialog(null,
+                                            "Stock insuffisant pour " + produitPourMaj.getNomProduit()
+                                            + " après vérification");
+                                    continue;
+                                }
+                                produitPourMaj.setQteStockProduit(nouveauStock);
+
+                                // Mettre à jour dans la base
+                                Produit produitModifie = produitPourMaj.modifierUneLigne(produitPourMaj, produitPourMaj.getIdProduit());
+                                if (produitModifie == null) {
+                                    JOptionPane.showMessageDialog(null,
+                                            "Erreur lors de la mise à jour du stock pour : " + produitPourMaj.getNomProduit());
+                                }
+
+                            }
+//
+//                            // Mettre à jour dans la base
+//                            produit.modifierUneLigne(produit, produit.getIdProduit());
+                        }
+                    }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Erreur ligne " + (i + 1) + ": " + e.getMessage());
+                }
+            }
+
+            // 3. Vider le tableau
+            model.setRowCount(0);
+
+            JOptionPane.showMessageDialog(null, "Vente validée avec succès !\nID: " + ventProd.getIdVenteProd());
+
+            return true;
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erreur lors de la validation: " + e.getMessage());
+            return false;
+        }
+
     }
 }

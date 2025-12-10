@@ -82,7 +82,7 @@ public class LigneChoix extends ModeleOperationBD<LigneChoix> {
         long idVenteProd = ObjIns.getIdVenteProduitLgChx().getIdVenteProd();
         try {
             String requete = "INSERT INTO ligneChoix (qteLgChx, montantpartielLgChx, idProduitLgChx, idVenteProduitLgChx)"
-                    + " VALUES ('"+ObjIns.getIdLgChx()+"','"+ObjIns.getMontantpartielLgChx()+"','"+idProduit+"','"+idVenteProd+"')";
+                    + " VALUES ('"+ObjIns.getQteLgChx()+"','"+ObjIns.getMontantpartielLgChx()+"','"+idProduit+"','"+idVenteProd+"')";
 
             MaConnexionBD konx = new MaConnexionBD();
             konx.ouvrirConnexion();

@@ -4,6 +4,8 @@
  */
 package miniboutikstgdgdp.gui;
 
+import miniboutikstgdgdp.gui.ControleurGui.InformationProduitPanelControleur;
+
 /**
  *
  * @author HP ELITEBOOK
@@ -15,6 +17,7 @@ public class InformationProduitPanel extends javax.swing.JPanel {
      */
     public InformationProduitPanel() {
         initComponents();
+        InformationProduitPanelControleur.infoVenteProduit(historiqueVenteTable);
     }
 
     /**

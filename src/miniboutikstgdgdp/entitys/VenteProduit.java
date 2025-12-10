@@ -76,7 +76,7 @@ public class VenteProduit extends ModeleOperationBD<VenteProduit> {
 
             String dateStr = DateTraitement.dateToStringDdMmYyyy(ObjIns.dateVenteProd);
 
-            String requete = "INSERT INTO vente (idVente, dateVente, montantVente) VALUES ("
+            String requete = "INSERT INTO venteproduit (idVenteProd, dateVenteProd, montantVenteProd) VALUES ("
                     + ObjIns.getIdVenteProd() + ", '" + dateStr + "', "
                     + ObjIns.getMontantVenteProd() + ")"; // idProduitVente peut être NULL car on a les lignes
 

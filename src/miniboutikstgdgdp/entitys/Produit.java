@@ -152,9 +152,7 @@ public class Produit extends ModeleOperationBD<Produit> {
     @Override
     public Produit modifierUneLigne(Produit ObjIns, Object cleO) {
       try {
-            String requete = "UPDATE produit SET "
-                           + "qteStockProduit = " + ObjIns.getQteStockProduit() + ", "
-                           + " WHERE idProduit = " + cleO;
+            String requete = "UPDATE produit SET qteStockProduit = '" + ObjIns.getQteStockProduit() + "'  WHERE idProduit = " + cleO;
             
             MaConnexionBD konx = new MaConnexionBD();
             konx.ouvrirConnexion();

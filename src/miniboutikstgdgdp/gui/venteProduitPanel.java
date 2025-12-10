@@ -76,7 +76,7 @@ public class venteProduitPanel extends javax.swing.JPanel {
         listeChoixProdTable = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
         supprimerPagnierButton = new javax.swing.JButton();
-        supprimerPagnierButton1 = new javax.swing.JButton();
+        validerPanierButton = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -291,13 +291,13 @@ public class venteProduitPanel extends javax.swing.JPanel {
             }
         });
 
-        supprimerPagnierButton1.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 14)); // NOI18N
-        supprimerPagnierButton1.setForeground(new java.awt.Color(0, 204, 0));
-        supprimerPagnierButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/miniboutikstgdgdp/image/valider vente.png"))); // NOI18N
-        supprimerPagnierButton1.setText("Valider la vente");
-        supprimerPagnierButton1.addActionListener(new java.awt.event.ActionListener() {
+        validerPanierButton.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 14)); // NOI18N
+        validerPanierButton.setForeground(new java.awt.Color(0, 204, 0));
+        validerPanierButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/miniboutikstgdgdp/image/valider vente.png"))); // NOI18N
+        validerPanierButton.setText("Valider la vente");
+        validerPanierButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                supprimerPagnierButton1ActionPerformed(evt);
+                validerPanierButtonActionPerformed(evt);
             }
         });
 
@@ -307,7 +307,7 @@ public class venteProduitPanel extends javax.swing.JPanel {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(41, 41, 41)
-                .addComponent(supprimerPagnierButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(validerPanierButton, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(supprimerPagnierButton)
                 .addContainerGap())
@@ -315,7 +315,7 @@ public class venteProduitPanel extends javax.swing.JPanel {
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(supprimerPagnierButton1)
+                .addComponent(validerPanierButton)
                 .addComponent(supprimerPagnierButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -392,9 +392,10 @@ public class venteProduitPanel extends javax.swing.JPanel {
         ventProd = venteProduitPanelControleur.supprimerDansLePanier2(listeChoixProdTable, ventProd, montantTotalLabel);
     }//GEN-LAST:event_supprimerPagnierButtonActionPerformed
 
-    private void supprimerPagnierButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supprimerPagnierButton1ActionPerformed
+    private void validerPanierButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validerPanierButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_supprimerPagnierButton1ActionPerformed
+        venteProduitPanelControleur.validerVenteDirecte(listeChoixProdTable, ventProd);
+    }//GEN-LAST:event_validerPanierButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -423,6 +424,6 @@ public class venteProduitPanel extends javax.swing.JPanel {
     private javax.swing.JLabel qteProdLabel;
     private javax.swing.JSpinner quantiteSpinner;
     private javax.swing.JButton supprimerPagnierButton;
-    private javax.swing.JButton supprimerPagnierButton1;
+    private javax.swing.JButton validerPanierButton;
     // End of variables declaration//GEN-END:variables
 }
