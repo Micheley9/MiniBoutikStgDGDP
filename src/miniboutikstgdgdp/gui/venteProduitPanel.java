@@ -256,17 +256,17 @@ public class venteProduitPanel extends javax.swing.JPanel {
 
         listeChoixProdTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "N°", "Nom", "Prix", "Qte", "Montant  Partiel", "Select"
+                "N°", "ID", "Nom", "Prix", "Qte", "Montant  Partiel", "Select"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, true, true, true, true
+                false, true, true, true, true, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -394,7 +394,7 @@ public class venteProduitPanel extends javax.swing.JPanel {
 
     private void validerPanierButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validerPanierButtonActionPerformed
         // TODO add your handling code here:
-        venteProduitPanelControleur.validerVenteDirecte(listeChoixProdTable, ventProd);
+        ventProd = venteProduitPanelControleur.validerVenteDirecte(listeChoixProdTable, ventProd,montantTotalLabel);
     }//GEN-LAST:event_validerPanierButtonActionPerformed
 
 

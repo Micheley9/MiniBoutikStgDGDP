@@ -4,18 +4,11 @@
  */
 package miniboutikstgdgdp.gui;
 
-
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
+import javax.swing.JLabel;
 import miniboutikstgdgdp.entitys.Categorie;
 import miniboutikstgdgdp.entitys.Produit;
-import miniboutikstgdgdp.entitys.Produits;
 import miniboutikstgdgdp.gui.ControleurGui.NouveauProduitPanelControleurMonoTbl;
-
 import miniboutikstgdgdp.gui.ControleurGui.venteProduitPanelControleur;
-import static miniboutikstgdgdp.gui.ControleurGui.venteProduitPanelControleur.affichageComboBoxOOP;
 
 /**
  *
@@ -24,63 +17,31 @@ import static miniboutikstgdgdp.gui.ControleurGui.venteProduitPanelControleur.af
 public class NouveauProduitPanel extends javax.swing.JPanel {
     //
 
+    @Override
+    public void setVisible(boolean aFlag) {
+        this.idProduit.setVisible(false);
+    }
     
-    //
-    // 1. Déclaration de l'attribut de stockage
-//    private int idCategorieSelectionnee = -1; 
-//    
-// 
-//    public void initialiserEcouteurCategorie(JComboBox<Categorie> categorieComboBox) {
-//        
-//        // 1. Appel de votre méthode pour remplir le ComboBox
-//        affichageComboBoxOOP(categorieComboBox);
-//        
-//        // 2. Ajout de l'écouteur qui met à jour this.idCategorieSelectionnee
-//        categorieComboBox.addItemListener(new ItemListener() {
-//            @Override
-//            public void itemStateChanged(ItemEvent e) {
-//                if (e.getStateChange() == ItemEvent.SELECTED) {
-//                    Categorie categorieSelectionnee = (Categorie) e.getItem();
-//                    int idCat = categorieSelectionnee.getIdCategorie();
-//                    
-//                    // Stockage dans la variable de la classe (FormulaireNouveauProduit.this)
-//                    NouveauProduitPanel.this.idCategorieSelectionnee = idCat; 
-//                    
-//                    System.out.println("ID Catégorie stocké: " + idCategorieSelectionnee);
-//                }
-//            }
-//        });
-//    }
-
-//    // Getter optionnel si vous avez besoin d'y accéder depuis l'extérieur
-//    public int getIdCategorieSelectionnee() {
-//        return idCategorieSelectionnee;
-//    }
-    //
-
     private Produit pdtO = new Produit();
-    private  Categorie idCat = new Categorie();
-    private  int idCatInt;
-
+    private Categorie idCat = new Categorie();
+    private int idCatInt;
+    
     public void setIdCat(Categorie idCat) {
         this.idCat = idCat;
     }
-
+    
     public Categorie getIdCat() {
         return idCat;
     }
-    
-    
 
-   
     /**
      * Creates new form venteProduitPanel
      */
     public NouveauProduitPanel() {
         initComponents();
-       // NouveauProduitPanelControleur.affichage(categorieProduitComboBox);
-       // NouveauProduitPanelControleur.chargerInfosPersonne(listeProduitTable);
-       NouveauProduitPanelControleurMonoTbl.afficageSurTable(listeProduitTable);
+        // NouveauProduitPanelControleur.affichage(categorieProduitComboBox);
+        // NouveauProduitPanelControleur.chargerInfosPersonne(listeProduitTable);
+        NouveauProduitPanelControleurMonoTbl.afficageSurTable(listeProduitTable);
         venteProduitPanelControleur.affichageComboBoxOOP(categorieProduitComboBox);
 //      initialiserEcouteurCategorie(categorieProduitComboBox);
         
@@ -119,9 +80,10 @@ public class NouveauProduitPanel extends javax.swing.JPanel {
         fabricantProduitTextField = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         descriptionTextArea = new javax.swing.JTextArea();
+        idProduit = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         RechercheTextField = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
+        rechercherButton = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -131,7 +93,7 @@ public class NouveauProduitPanel extends javax.swing.JPanel {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 837, Short.MAX_VALUE)
+            .addGap(0, 828, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -141,17 +103,17 @@ public class NouveauProduitPanel extends javax.swing.JPanel {
         listeProduitTable.setFont(new java.awt.Font("Century Schoolbook", 1, 14)); // NOI18N
         listeProduitTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "N°", "NOM", "CODE", "CATEGORIE", "PRIX", "QUANTITE", "FRABRICANT"
+                "N°", "NOM", "CODE", "CATEGORIE", "PRIX", "QUANTITE", "FRABRICANT", "Identifiant"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -178,6 +140,11 @@ public class NouveauProduitPanel extends javax.swing.JPanel {
         deleteButton.setFont(new java.awt.Font("Segoe Print", 1, 14)); // NOI18N
         deleteButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/miniboutikstgdgdp/image/delete_81361 (1).png"))); // NOI18N
         deleteButton.setText("DELETE");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -262,6 +229,8 @@ public class NouveauProduitPanel extends javax.swing.JPanel {
         descriptionTextArea.setRows(5);
         jScrollPane2.setViewportView(descriptionTextArea);
 
+        idProduit.setText("------");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -279,11 +248,16 @@ public class NouveauProduitPanel extends javax.swing.JPanel {
                     .addComponent(codeProduitTextField)
                     .addComponent(prixProduitTextField)
                     .addComponent(quantiteProduitTextField))
-                .addGap(96, 96, 96)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(96, 96, 96)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addComponent(idProduit)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(categorieProduitComboBox, 0, 259, Short.MAX_VALUE)
@@ -324,35 +298,46 @@ public class NouveauProduitPanel extends javax.swing.JPanel {
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(jLabel7)
+                                .addGap(5, 5, 5)
+                                .addComponent(idProduit)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         RechercheTextField.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        RechercheTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                RechercheTextFieldKeyReleased(evt);
+            }
+        });
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/miniboutikstgdgdp/image/search_14389.png"))); // NOI18N
-        jLabel8.setText("RECHERCHE");
+        rechercherButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/miniboutikstgdgdp/image/search_14389.png"))); // NOI18N
+        rechercherButton.setText("RECHERCHE");
+        rechercherButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rechercherButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+            .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(RechercheTextField)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(RechercheTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27))
+                .addComponent(rechercherButton)
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(17, Short.MAX_VALUE)
+                .addContainerGap(21, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(RechercheTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8))
+                    .addComponent(RechercheTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rechercherButton))
                 .addGap(16, 16, 16))
         );
 
@@ -368,8 +353,8 @@ public class NouveauProduitPanel extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                             .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 846, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 2, Short.MAX_VALUE))
         );
@@ -407,21 +392,20 @@ public class NouveauProduitPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void sauvegadeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sauvegadeButtonActionPerformed
-      
-             
+
 //setPdtO(NouveauProduitPanelControleurMonoTbl.creationProduit(nomProduitTextField, codeProduitTextField, prixProduitTextField, quantiteProduitTextField, fabricantProduitTextField, fournisseurProdTextField, categorieProduitComboBox));
 //
-Categorie categorieSelectionnee = (Categorie) categorieProduitComboBox.getSelectedItem(); 
- int idCatAInserer = categorieSelectionnee.getIdCategorie();
-  
+        Categorie categorieSelectionnee = (Categorie) categorieProduitComboBox.getSelectedItem();        
+        int idCatAInserer = categorieSelectionnee.getIdCategorie();
+
 //
-setPdtO(NouveauProduitPanelControleurMonoTbl.insertionProduit(nomProduitTextField, codeProduitTextField, prixProduitTextField, quantiteProduitTextField, fabricantProduitTextField, descriptionTextArea, idCatAInserer));
-NouveauProduitPanelControleurMonoTbl.afficageSurTable(listeProduitTable);
+        setPdtO(NouveauProduitPanelControleurMonoTbl.insertionProduit(nomProduitTextField, codeProduitTextField, prixProduitTextField, quantiteProduitTextField, fabricantProduitTextField, descriptionTextArea, idCatAInserer));
+        NouveauProduitPanelControleurMonoTbl.afficageSurTable(listeProduitTable);
     }//GEN-LAST:event_sauvegadeButtonActionPerformed
 
     private void categorieProduitComboBoxKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_categorieProduitComboBoxKeyPressed
         // TODO add your handling code here:
-       
+        
     }//GEN-LAST:event_categorieProduitComboBoxKeyPressed
 
     private void categorieProduitComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_categorieProduitComboBoxItemStateChanged
@@ -431,11 +415,26 @@ NouveauProduitPanelControleurMonoTbl.afficageSurTable(listeProduitTable);
 
     private void categorieProduitComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categorieProduitComboBoxActionPerformed
         // TODO add your handling code here:
-       // NouveauProduitPanelControleurMonoTbl.affrichageReccuperationId(categorieProduitComboBox, idCat);
-     // NouveauProduitPanelControleurMonoTbl.recupeurIdCategorie(categorieProduitComboBox, ideCategLabel);
-    
+        // NouveauProduitPanelControleurMonoTbl.affrichageReccuperationId(categorieProduitComboBox, idCat);
+        // NouveauProduitPanelControleurMonoTbl.recupeurIdCategorie(categorieProduitComboBox, ideCategLabel);
+        
     }//GEN-LAST:event_categorieProduitComboBoxActionPerformed
 
+    private void RechercheTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_RechercheTextFieldKeyReleased
+        // TODO add your handling code here:
+        NouveauProduitPanelControleurMonoTbl.rechercheJTextField(listeProduitTable, RechercheTextField);
+    }//GEN-LAST:event_RechercheTextFieldKeyReleased
+
+    private void rechercherButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rechercherButtonActionPerformed
+        // TODO add your handling code here:
+        NouveauProduitPanelControleurMonoTbl.rechecherProduit(nomProduitTextField, RechercheTextField, codeProduitTextField, prixProduitTextField, quantiteProduitTextField, fabricantProduitTextField, descriptionTextArea, idCatInt, idProduit);
+    }//GEN-LAST:event_rechercherButtonActionPerformed
+
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        // TODO add your handling code here:
+        NouveauProduitPanelControleurMonoTbl.suppressionProduit(idProduit);
+        
+    }//GEN-LAST:event_deleteButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField RechercheTextField;
@@ -444,6 +443,7 @@ NouveauProduitPanelControleurMonoTbl.afficageSurTable(listeProduitTable);
     private javax.swing.JButton deleteButton;
     private javax.swing.JTextArea descriptionTextArea;
     private javax.swing.JTextField fabricantProduitTextField;
+    private javax.swing.JLabel idProduit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -451,7 +451,6 @@ NouveauProduitPanelControleurMonoTbl.afficageSurTable(listeProduitTable);
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -463,6 +462,7 @@ NouveauProduitPanelControleurMonoTbl.afficageSurTable(listeProduitTable);
     private javax.swing.JTextField nomProduitTextField;
     private javax.swing.JTextField prixProduitTextField;
     private javax.swing.JTextField quantiteProduitTextField;
+    private javax.swing.JButton rechercherButton;
     private javax.swing.JButton sauvegadeButton;
     private javax.swing.JButton upDateButton;
     // End of variables declaration//GEN-END:variables
@@ -470,7 +470,7 @@ NouveauProduitPanelControleurMonoTbl.afficageSurTable(listeProduitTable);
     public Produit getPdtO() {
         return pdtO;
     }
-
+    
     public void setPdtO(Produit pdtO) {
         this.pdtO = pdtO;
     }

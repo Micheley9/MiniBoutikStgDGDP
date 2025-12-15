@@ -31,7 +31,7 @@ public class Produit extends ModeleOperationBD<Produit> {
 
     public Produit() {
     }
-    
+
     public Produit(long idProduit, String nomProduit, String codeProduit, double prixProdduit, int qteStockProduit, String fabricantProduit, String descriptionProduit, Categorie idCategorieProduit) {
         this.idProduit = idProduit;
         this.nomProduit = nomProduit;
@@ -47,93 +47,93 @@ public class Produit extends ModeleOperationBD<Produit> {
     public long getIdProduit() {
         return idProduit;
     }
-    
+
     public void setIdProduit(long idProduit) {
         this.idProduit = idProduit;
     }
-    
+
     public String getNomProduit() {
         return nomProduit;
     }
-    
+
     public void setNomProduit(String nomProduit) {
         this.nomProduit = nomProduit;
     }
-    
+
     public String getCodeProduit() {
         return codeProduit;
     }
-    
+
     public void setCodeProduit(String codeProduit) {
         this.codeProduit = codeProduit;
     }
-    
+
     public double getPrixProdduit() {
         return prixProdduit;
     }
-    
+
     public void setPrixProdduit(double prixProdduit) {
         this.prixProdduit = prixProdduit;
     }
-    
+
     public int getQteStockProduit() {
         return qteStockProduit;
     }
-    
+
     public void setQteStockProduit(int qteStockProduit) {
         this.qteStockProduit = qteStockProduit;
     }
-    
+
     public String getFabricantProduit() {
         return fabricantProduit;
     }
-    
+
     public void setFabricantProduit(String fabricantProduit) {
         this.fabricantProduit = fabricantProduit;
     }
-    
+
     public String getDescriptionProduit() {
         return descriptionProduit;
     }
-    
+
     public void setDescriptionProduit(String descriptionProduit) {
         this.descriptionProduit = descriptionProduit;
     }
-    
+
     public Categorie getIdCategorieProduit() {
         return idCategorieProduit;
     }
-    
+
     public void setIdCategorieProduit(Categorie idCategorieProduit) {
         this.idCategorieProduit = idCategorieProduit;
     }
-    
+
     public List<LigneChoix> getLigneChoixProdList() {
         return ligneChoixProdList;
     }
-    
+
     public void setLigneChoixProdList(List<LigneChoix> ligneChoixProdList) {
         this.ligneChoixProdList = ligneChoixProdList;
     }
-    
+
     @Override
     public Produit insererUneLigne(Produit ObjIns) {
         Produit prodO = new Produit();
-        
+
         try {
             //converture l'idCategorie de Classe à int
             int idCat = ObjIns.getIdCategorieProduit().getIdCategorie();
-            
+
             String requete = "INSERT INTO produit (idProduit, nomProduit, codeProduit, prixProdduit, qteStockProduit, fabricantProduit, descriptionProduit,idCategorieProduit) "
                     + "VALUES ('" + ObjIns.idProduit + "', '" + ObjIns.getNomProduit() + "','" + ObjIns.getCodeProduit() + "','" + ObjIns.getPrixProdduit() + "','" + ObjIns.getQteStockProduit() + "','" + ObjIns.getFabricantProduit() + "',"
-                    + "'" + ObjIns.getDescriptionProduit() + "','" + idCat+ "')";
+                    + "'" + ObjIns.getDescriptionProduit() + "','" + idCat + "')";
             MaConnexionBD konx = new MaConnexionBD();
             konx.ouvrirConnexion();
             int resultReq = konx.ExecuteurdeRequeteUpdate(requete);
             konx.fermetureConnexion();
             if (resultReq > 0) {
                 prodO.trouverUn(ObjIns.idProduit);
-                
+
             } else {
                 prodO = null;
             }
@@ -143,22 +143,22 @@ public class Produit extends ModeleOperationBD<Produit> {
         }
         return prodO;
     }
-    
+
     @Override
     public List<Produit> insererPlusieursLignes(List<Produit> ObjIns) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
     @Override
     public Produit modifierUneLigne(Produit ObjIns, Object cleO) {
-      try {
+        try {
             String requete = "UPDATE produit SET qteStockProduit = '" + ObjIns.getQteStockProduit() + "'  WHERE idProduit = " + cleO;
-            
+
             MaConnexionBD konx = new MaConnexionBD();
             konx.ouvrirConnexion();
             int resultReq = konx.ExecuteurdeRequeteUpdate(requete);
             konx.fermetureConnexion();
-            
+
             if (resultReq > 0) {
                 return ObjIns;
             } else {
@@ -170,17 +170,33 @@ public class Produit extends ModeleOperationBD<Produit> {
         }
 
     }
-    
+
     @Override
     public Produit supprimerUneLigne(Object cleO) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Produit prodO = new Produit();
+        try {
+            String requeteSql = "DELETE FROM personne WHERE  idPers= '" + cleO;
+            MaConnexionBD konxi = new MaConnexionBD();
+            konxi.ouvrirConnexion();
+            int execReq = konxi.ExecuteurdeRequeteUpdate(requeteSql);
+            if (execReq > 0) {
+                prodO.trouverUn(cleO);
+            } else {
+                prodO = null;
+            }
+            konxi.fermetureConnexion();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erreur dans Produit : supprimerUneLigne\n" + e.getMessage());
+        }
+        return prodO;
     }
-    
+
     @Override
     public List<Produit> supprimerPlusieursLignes(List<Object> ObjList) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
     @Override
     public Produit trouverUn(Object cleO) {
         Produit prodO = new Produit();
@@ -205,13 +221,13 @@ public class Produit extends ModeleOperationBD<Produit> {
                 prodO.setIdCategorieProduit(new Categorie().trouverUn(idCat));
             }
             konex.fermetureConnexion();
-            
+
         } catch (Exception e) {
-            JOptionPane.showConfirmDialog(null, "Erreur dans Produit, trouverUn : \n" + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erreur dans Produit, trouverUn : \n" + e.getMessage());
         }
         return prodO;
     }
-    
+
     @Override
     public List<Produit> trouverTout() {
         List<Produit> prodList = new ArrayList<>();
@@ -241,29 +257,44 @@ public class Produit extends ModeleOperationBD<Produit> {
             }
             rs.close();
             konx.fermetureConnexion();
-            
+
         } catch (Exception e) {
-            JOptionPane.showConfirmDialog(null, "Erreur dans Produit, trouverTout : \n" + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erreur dans Produit, trouverTout : \n" + e.getMessage());
         }
         return prodList;
     }
-    
+
     @Override
     public List<Produit> trouverPlusieus(Object ObjTrv) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
     @Override
     public String toString() {
         return nomProduit;
     }
 
-    private String getFournisseurProduit() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    public Produit modificationProduitEntier(Produit ObjIns, Object cleO) {
 
-//    private String getFournisseurProduit() {
-//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-//    }
-    
+        int idCat = ObjIns.getIdCategorieProduit().getIdCategorie();
+        try {
+            String requete = "UPDATE produit SET nomProduit '" + ObjIns.getNomProduit() + "', '" + ObjIns.getCodeProduit() + "','" + ObjIns.getPrixProdduit() + "',"
+                    + "'" + ObjIns.getQteStockProduit() + "','" + ObjIns.getFabricantProduit() + "','" + ObjIns.getDescriptionProduit() + "','" + idCat + "''"
+                    + " WHERE idProduit=" + cleO;
+            //
+            MaConnexionBD konx = new MaConnexionBD();
+            konx.ouvrirConnexion();
+            int resultReq = konx.ExecuteurdeRequeteUpdate(requete);
+            konx.fermetureConnexion();
+
+            if (resultReq > 0) {
+                return ObjIns;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erreur dans Produit, modificationProduitEntier : \n" + e.getMessage());
+            return null;
+        }
+    }
 }

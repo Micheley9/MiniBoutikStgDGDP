@@ -5,6 +5,7 @@
 package miniboutikstgdgdp.gui.ControleurGui;
 //
 
+import java.sql.ResultSet;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JComboBox;
@@ -13,9 +14,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import miniboutikstgdgdp.entitys.Categorie;
 import miniboutikstgdgdp.entitys.Produit;
 import miniboutikstgdgdp.entitys.Produits;
+import miniboutikstgdgdp.entitys.connexionBD.MaConnexionBD;
 
 /**
  *
@@ -63,7 +68,7 @@ public class NouveauProduitPanelControleurMonoTbl {
     public static void afficageSurTable(JTable produitsTable) {
         List<Produit> prodList = new Produit().trouverTout();
         //
-        Object[][] dataProd = new Object[prodList.size()][7];
+        Object[][] dataProd = new Object[prodList.size()][8];
         //
         int i = 0;
         //
@@ -75,17 +80,18 @@ public class NouveauProduitPanelControleurMonoTbl {
             dataProd[i][4] = prodO.getPrixProdduit();
             dataProd[i][5] = prodO.getQteStockProduit();
             dataProd[i][6] = prodO.getFabricantProduit();
+            dataProd[i][7] = prodO.getIdProduit();
             i++;
         }
 
         produitsTable.setModel(new javax.swing.table.DefaultTableModel(
                 dataProd,
                 new String[]{
-                    "N°", "NOM", "CODE", "CATEGORIE", "PRIX", "QUANTITE", "FRABRICANT"
+                    "N°", "NOM", "CODE", "CATEGORIE", "PRIX", "QUANTITE", "FRABRICANT", "Identifiant"
                 }
         ) {
             boolean[] canEdit = new boolean[]{
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -107,12 +113,6 @@ public class NouveauProduitPanelControleurMonoTbl {
         double prixProd = Double.parseDouble(prixProdTextField.getText());
         int qteProd = Integer.parseInt(qteProdTextField.getText());
         //
-        // 2. RÉCUPÉRATION DE L'OBJET CATÉGORIE SÉLECTIONNÉ
-           // 2. Vérification de l'ID de catégorie
-        if (idCategorieSelectionnee <= 0) {
-            JOptionPane.showMessageDialog(null, "ID de catégorie invalide. Veuillez sélectionner une catégorie.", "Erreur", JOptionPane.ERROR_MESSAGE);
-            return null;
-        }
 
         Categorie categoriePourInsertion = new Categorie();
         categoriePourInsertion.setIdCategorie(idCategorieSelectionnee);
@@ -151,5 +151,60 @@ public class NouveauProduitPanelControleurMonoTbl {
 //        idCategorie.setText(""+selectedProduit.getIdCategorie());
 //       
 //    }
-    
+    public static void rechercheJTextField(JTable listeUtilisateurJTable, JTextField rechercheTextField) {
+        DefaultTableModel mod = (DefaultTableModel) listeUtilisateurJTable.getModel();
+        TableRowSorter<DefaultTableModel> tabMod = new TableRowSorter<>(mod);
+        listeUtilisateurJTable.setRowSorter(tabMod);
+        tabMod.setRowFilter(RowFilter.regexFilter(rechercheTextField.getText()));
+    }
+
+    public static void rechecherProduit(JTextField nomProdTextField, JTextField rechercheTextField, JTextField codeProdTextField, JTextField prixProdTextField,
+            JTextField qteProdTextField, JTextField fabicantProTextField, JTextArea descrpritionTextArea, int idCategorieSelectionnee, JLabel IdentifiantProd) {
+        Categorie categoriePourInsertion = new Categorie();
+        categoriePourInsertion.setIdCategorie(idCategorieSelectionnee);
+        //
+        try {
+            String requete = "SELECT idProduit, nomProduit, codeProduit, prixProdduit, qteStockProduit, fabricantProduit, descriptionProduit,idCategorieProduit "
+                    + "FROM produit WHERE nomProduit = '"+rechercheTextField.getText()+"'";
+            MaConnexionBD konex = new MaConnexionBD();
+            konex.ouvrirConnexion();
+            ResultSet rs = konex.ExecuteurdeRequeteSelect(requete);
+            //
+            while (rs.next()) {
+
+                nomProdTextField.setText(rs.getString("nomProduit"));
+                codeProdTextField.setText(rs.getString("codeProduit"));
+                prixProdTextField.setText(rs.getString("prixProdduit"));
+                qteProdTextField.setText(rs.getString("qteStockProduit"));
+                fabicantProTextField.setText(rs.getString("fabricantProduit"));
+                descrpritionTextArea.setText(rs.getString("descriptionProduit"));
+                idCategorieSelectionnee = rs.getInt("idCategorieProduit"); 
+                IdentifiantProd.setText(rs.getString("idProduit"));
+
+                //
+            }
+            konex.fermetureConnexion();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erreur dans Produit, trouverUn : \n" + e.getMessage());
+        }
+
+    }
+    public static void suppressionProduit(JLabel identifiant) {
+         try {
+            String requeteSql = "DELETE FROM produit WHERE  idProduit= " + identifiant.getText();
+            MaConnexionBD konxi = new MaConnexionBD();
+            konxi.ouvrirConnexion();
+            int execReq = konxi.ExecuteurdeRequeteUpdate(requeteSql);
+            if (execReq > 0) {
+              JOptionPane.showMessageDialog(null, "suppression reussie !!"   );
+            } else {
+              JOptionPane.showMessageDialog(null, "Erreur lors de la suppression !!");
+            }
+            konxi.fermetureConnexion();
+             } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erreur dans Produit, trouverUn : \n" + e.getMessage());
+        }
+
+    }
 }
