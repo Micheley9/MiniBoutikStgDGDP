@@ -28,6 +28,7 @@ public class Produit extends ModeleOperationBD<Produit> {
     private Categorie idCategorieProduit;
     //
     private List<LigneChoix> ligneChoixProdList;
+    private List<Approvisionnement> approvProdList;
 
     public Produit() {
     }
@@ -296,5 +297,13 @@ public class Produit extends ModeleOperationBD<Produit> {
             JOptionPane.showMessageDialog(null, "Erreur dans Produit, modificationProduitEntier : \n" + e.getMessage());
             return null;
         }
+    }
+
+    public List<Approvisionnement> getApprovProdList() {
+        return approvProdList;
+    }
+
+    public void setApprovProdList(List<Approvisionnement> approvProdList) {
+        this.approvProdList = approvProdList;
     }
 }

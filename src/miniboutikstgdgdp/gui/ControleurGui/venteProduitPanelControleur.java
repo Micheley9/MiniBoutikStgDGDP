@@ -269,7 +269,7 @@ public class venteProduitPanelControleur {
         for (int i = 0; i < nlt; i++) {
             if (((boolean) listeChoixProdTable.getValueAt(i, 6)) == true) {
                 listIndexSuppr.add(i);
-            }
+            } 
         }
         //
         if (listIndexSuppr.isEmpty()) {
@@ -570,13 +570,7 @@ public class venteProduitPanelControleur {
             }
 
             if (toutesLignesInserees) {
-                // Vider le tableau 
-                model.setRowCount(0);
-
-                //  Mettre à jour le JLabel montantTotalLabel 
-                if (montantTotalLabel != null) {
-                    montantTotalLabel.setText("0.0");
-                }
+               
                 // Afficher un message de succès 
                 String DateJour = DateTraitement.dateToStringDdMmYyyy(new Date());
                 JOptionPane.showMessageDialog(null,

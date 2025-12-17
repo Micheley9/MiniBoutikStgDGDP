@@ -5,6 +5,7 @@
 package miniboutikstgdgdp.gui.ControleurGui;
 
 import java.sql.ResultSet;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import miniboutikstgdgdp.entitys.connexionBD.MaConnexionBD;
@@ -62,6 +63,84 @@ public class InformationProduitPanelControleur {
             });
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "L'affichage Echouée!!!!" + e.getMessage());
+        }
+    }
+
+    public static void affichageMontant(JLabel recetteLabel) {
+        try {
+            String requete = "SELECT SUM(montantVenteProd) AS chiffreAffaireTotal FROM venteproduit";
+            MaConnexionBD konex = new MaConnexionBD();
+            konex.ouvrirConnexion();
+            ResultSet rs = konex.ExecuteurdeRequeteSelect(requete);
+            while (rs.next()) {
+                recetteLabel.setText(rs.getString("chiffreAffaireTotal") + " CDF");
+            }
+            konex.fermetureConnexion();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "L'affichage  de montant Echouée!!!!" + e.getMessage());
+        }
+    }
+
+    public static void affichageProduit(JLabel produitLabel) {
+        try {
+            String requete = "SELECT COUNT(*) AS nombreTotalProduits FROM produit";
+            MaConnexionBD konex = new MaConnexionBD();
+            konex.ouvrirConnexion();
+            ResultSet rs = konex.ExecuteurdeRequeteSelect(requete);
+            while (rs.next()) {
+                produitLabel.setText(rs.getString("nombreTotalProduits"));
+            }
+            konex.fermetureConnexion();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "L'affichage  de Produit Echouée!!!!" + e.getMessage());
+        }
+    }
+
+    public static void affichageVente(JLabel venteLabel) {
+        try {
+            String requete = "SELECT COUNT(idVenteProd) AS nombreDeVentes FROM venteproduit";
+            MaConnexionBD konex = new MaConnexionBD();
+            konex.ouvrirConnexion();
+            ResultSet rs = konex.ExecuteurdeRequeteSelect(requete);
+            while (rs.next()) {
+                venteLabel.setText(rs.getString("nombreDeVentes"));
+            }
+            konex.fermetureConnexion();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "L'affichage  de Venate Echouée!!!!" + e.getMessage());
+        }
+    }
+
+    public static void affichageProdPlusVendu(JLabel nomProdLabel, JLabel nombreVenteLabel) {
+        try {
+            String requete = "SELECT p.nomProduit , SUM(l.qteLgChx) AS totalVendu FROM produit p "
+                    + "JOIN lignechoix l ON p.idProduit = l.idProduitLgChx GROUP BY p.idProduit,  p.nomProduit ORDER BY totalVendu DESC LIMIT 1;";
+            MaConnexionBD konex = new MaConnexionBD();
+            konex.ouvrirConnexion();
+            ResultSet rs = konex.ExecuteurdeRequeteSelect(requete);
+            while (rs.next()) {
+                nomProdLabel.setText(rs.getString("p.nomProduit"));
+                nombreVenteLabel.setText(rs.getString("totalVendu"));
+            }
+            konex.fermetureConnexion();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "L'affichage  de Venate Echouée!!!!" + e.getMessage());
+        }
+    }
+ public static void affichageProdMoinsVendu(JLabel nomProdLabel, JLabel nombreVenteLabel) {
+        try {
+            String requete = "SELECT p.nomProduit , SUM(l.qteLgChx) AS totalVendu FROM produit p "
+                    + "JOIN lignechoix l ON p.idProduit = l.idProduitLgChx GROUP BY p.idProduit,  p.nomProduit ORDER BY  totalVendu ASC LIMIT 1;";
+            MaConnexionBD konex = new MaConnexionBD();
+            konex.ouvrirConnexion();
+            ResultSet rs = konex.ExecuteurdeRequeteSelect(requete);
+            while (rs.next()) {
+                nomProdLabel.setText(rs.getString("p.nomProduit"));
+                nombreVenteLabel.setText(rs.getString("totalVendu"));
+            }
+            konex.fermetureConnexion();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "L'affichage  de Venate Echouée!!!!" + e.getMessage());
         }
     }
 }

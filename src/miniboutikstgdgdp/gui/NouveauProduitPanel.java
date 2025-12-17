@@ -21,15 +21,15 @@ public class NouveauProduitPanel extends javax.swing.JPanel {
     public void setVisible(boolean aFlag) {
         this.idProduit.setVisible(false);
     }
-    
+
     private Produit pdtO = new Produit();
     private Categorie idCat = new Categorie();
     private int idCatInt;
-    
+
     public void setIdCat(Categorie idCat) {
         this.idCat = idCat;
     }
-    
+
     public Categorie getIdCat() {
         return idCat;
     }
@@ -44,7 +44,7 @@ public class NouveauProduitPanel extends javax.swing.JPanel {
         NouveauProduitPanelControleurMonoTbl.afficageSurTable(listeProduitTable);
         venteProduitPanelControleur.affichageComboBoxOOP(categorieProduitComboBox);
 //      initialiserEcouteurCategorie(categorieProduitComboBox);
-        
+
     }
 
     /**
@@ -306,6 +306,11 @@ public class NouveauProduitPanel extends javax.swing.JPanel {
         );
 
         RechercheTextField.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        RechercheTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RechercheTextFieldActionPerformed(evt);
+            }
+        });
         RechercheTextField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 RechercheTextFieldKeyReleased(evt);
@@ -395,7 +400,7 @@ public class NouveauProduitPanel extends javax.swing.JPanel {
 
 //setPdtO(NouveauProduitPanelControleurMonoTbl.creationProduit(nomProduitTextField, codeProduitTextField, prixProduitTextField, quantiteProduitTextField, fabricantProduitTextField, fournisseurProdTextField, categorieProduitComboBox));
 //
-        Categorie categorieSelectionnee = (Categorie) categorieProduitComboBox.getSelectedItem();        
+        Categorie categorieSelectionnee = (Categorie) categorieProduitComboBox.getSelectedItem();
         int idCatAInserer = categorieSelectionnee.getIdCategorie();
 
 //
@@ -405,7 +410,7 @@ public class NouveauProduitPanel extends javax.swing.JPanel {
 
     private void categorieProduitComboBoxKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_categorieProduitComboBoxKeyPressed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_categorieProduitComboBoxKeyPressed
 
     private void categorieProduitComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_categorieProduitComboBoxItemStateChanged
@@ -417,12 +422,12 @@ public class NouveauProduitPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         // NouveauProduitPanelControleurMonoTbl.affrichageReccuperationId(categorieProduitComboBox, idCat);
         // NouveauProduitPanelControleurMonoTbl.recupeurIdCategorie(categorieProduitComboBox, ideCategLabel);
-        
+
     }//GEN-LAST:event_categorieProduitComboBoxActionPerformed
 
     private void RechercheTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_RechercheTextFieldKeyReleased
         // TODO add your handling code here:
-        NouveauProduitPanelControleurMonoTbl.rechercheJTextField(listeProduitTable, RechercheTextField);
+        //  NouveauProduitPanelControleurMonoTbl.rechercheJTextField(listeProduitTable, RechercheTextField);
     }//GEN-LAST:event_RechercheTextFieldKeyReleased
 
     private void rechercherButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rechercherButtonActionPerformed
@@ -433,8 +438,13 @@ public class NouveauProduitPanel extends javax.swing.JPanel {
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         // TODO add your handling code here:
         NouveauProduitPanelControleurMonoTbl.suppressionProduit(idProduit);
-        
+        NouveauProduitPanelControleurMonoTbl.afficageSurTable(listeProduitTable);
+
     }//GEN-LAST:event_deleteButtonActionPerformed
+
+    private void RechercheTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RechercheTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RechercheTextFieldActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField RechercheTextField;
@@ -470,7 +480,7 @@ public class NouveauProduitPanel extends javax.swing.JPanel {
     public Produit getPdtO() {
         return pdtO;
     }
-    
+
     public void setPdtO(Produit pdtO) {
         this.pdtO = pdtO;
     }
