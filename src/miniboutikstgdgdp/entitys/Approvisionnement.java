@@ -85,7 +85,7 @@ public class Approvisionnement extends ModeleOperationBD<Approvisionnement> {
         try {
             long idProd = ObjIns.getIdProdApprov().getIdProduit();
             String dateString = DateTraitement.dateToStringDdMmYyyy(ObjIns.getDateAppov());
-            
+
             String requete = "INSERT INTO approvionnement (idApprov, dateAppov, qteApprov, prixAchatApprov,idProdApprov) "
                     + "VALUES ('" + ObjIns.idApprov + "','" + dateString + "','" + ObjIns.getQteApprov() + "','" + ObjIns.getPrixAchatApprov() + "','" + idProd + "')";
             MaConnexionBD konx = new MaConnexionBD();
@@ -109,8 +109,27 @@ public class Approvisionnement extends ModeleOperationBD<Approvisionnement> {
 
     @Override
     public Approvisionnement modifierUneLigne(Approvisionnement ObjIns, Object cleO) {
+        String dateString = DateTraitement.dateToStringDdMmYyyy(ObjIns.getDateAppov());
+        long idProd = ObjIns.getIdProdApprov().getIdProduit();
+        try {
+            String requete = "UPDATE approvionnement SET  dateAppov ='" + dateString + "', qteApprov ='" + ObjIns.getQteApprov() + "',prixAchatApprov='" + ObjIns.getPrixAchatApprov() + "',"
+                    + "idProdApprov= '" + idProd + "'  WHERE idApprov=" + cleO;
+            //
+            MaConnexionBD konx = new MaConnexionBD();
+            konx.ouvrirConnexion();
+            int resultReq = konx.ExecuteurdeRequeteUpdate(requete);
+            konx.fermetureConnexion();
 
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            if (resultReq > 0) {
+                return ObjIns;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erreur dans approvionnement, modifierUneLigne : \n" + e.getMessage());
+            return null;
+        }
+
     }
 
     @Override
@@ -153,38 +172,40 @@ public class Approvisionnement extends ModeleOperationBD<Approvisionnement> {
     public List<Approvisionnement> trouverTout() {
         List<Approvisionnement> approvList = new ArrayList<>();
         try {
-           
-                String requete = "SELECT idApprov,dateAppov, qteApprov, prixAchatApprov, idProdApprov FROM  approvionnement";
-                MaConnexionBD konx = new MaConnexionBD();
-                konx.ouvrirConnexion();
-                ResultSet rs = konx.ExecuteurdeRequeteSelect(requete);
-                while (rs.next()) {
-                    Approvisionnement ApprovO = new Approvisionnement();
 
-                    ApprovO.setIdApprov(rs.getLong("idApprov"));
-                    ApprovO.setDateAppov(rs.getDate("dateAppov"));
-                    ApprovO.setQteApprov(rs.getInt("qteApprov"));
-                    ApprovO.setPrixAchatApprov(rs.getDouble("prixAchatApprov"));
-                    long idProd = rs.getLong("idProdApprov");
-                    ApprovO.setIdProdApprov(new Produit().trouverUn(idProd));
-                    
-                    approvList.add(ApprovO);
+            String requete = "SELECT idApprov,dateAppov, qteApprov, prixAchatApprov, idProdApprov FROM  approvionnement";
+            MaConnexionBD konx = new MaConnexionBD();
+            konx.ouvrirConnexion();
+            ResultSet rs = konx.ExecuteurdeRequeteSelect(requete);
+            while (rs.next()) {
+                Approvisionnement ApprovO = new Approvisionnement();
 
-                }
-                konx.fermetureConnexion();
+                ApprovO.setIdApprov(rs.getLong("idApprov"));
+                ApprovO.setDateAppov(rs.getDate("dateAppov"));
+                ApprovO.setQteApprov(rs.getInt("qteApprov"));
+                ApprovO.setPrixAchatApprov(rs.getDouble("prixAchatApprov"));
+                long idProd = rs.getLong("idProdApprov");
+                ApprovO.setIdProdApprov(new Produit().trouverUn(idProd));
 
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Erreur dans Approvisionnement, trouverTout : \n" + e.getMessage());
+                approvList.add(ApprovO);
+
             }
-            return approvList;
-        }
+            konx.fermetureConnexion();
 
-        @Override
-        public List<Approvisionnement> trouverPlusieus
-        (Object ObjTrv
-        
-            ) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erreur dans Approvisionnement, trouverTout : \n" + e.getMessage());
         }
-
+        return approvList;
     }
+
+    @Override
+    public List<Approvisionnement> trouverPlusieus(Object ObjTrv
+    ) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private Object getIdCategorieProduit() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+}

@@ -63,24 +63,106 @@ public class ApprovisionnementProduitPanelControleur {
         Approvisionnement approvIns = new Approvisionnement();
         approvO = approvIns.insererUneLigne(approvO);
 
-        Produit produitPourMaj = new Produit().trouverUn(produitSelectionne.getIdProduit());
-        int stockActuel = produitPourMaj.getQteStockProduit();
+        Produit prodO = new Produit().trouverUn(produitSelectionne.getIdProduit());
+        int stockActuel = prodO.getQteStockProduit();
         int nouveauStock = stockActuel + qteApprov;
         //
-        produitPourMaj.setQteStockProduit(nouveauStock);
+        prodO.setQteStockProduit(nouveauStock);
 
         // Mettre à jour dans la base
-        Produit produitModifie = produitPourMaj.modifierUneLigne(produitPourMaj, produitPourMaj.getIdProduit());
-        
-        JOptionPane.showMessageDialog(null, "Nouvelle Quatité du produit "+produitPourMaj.getNomProduit()+ " Est "+nouveauStock);
+        Produit produitModifie = prodO.modifierUneLigne(prodO, prodO.getIdProduit());
+
+        JOptionPane.showMessageDialog(null, "Nouvelle Quatité du produit " + prodO.getNomProduit() + " Est " + nouveauStock);
         if (produitModifie == null) {
             JOptionPane.showMessageDialog(null,
-                    "Erreur lors de la mise à jour du stock pour : " + produitPourMaj.getNomProduit());
+                    "Erreur lors de la mise à jour du stock pour : " + prodO.getNomProduit());
         }
         if (approvO == null) {
             JOptionPane.showMessageDialog(null, "Echec .........");
         } else {
             JOptionPane.showMessageDialog(null, "L'approvisionnnement est effectuer avec succès");
+        }
+
+        return approvO;
+    }
+
+    public static void tableClick(JComboBox<Produit> idProdJComboBox, JDateChooser dateApprovDateChooser, JTextField qteApprovTextField,
+            JTextField prixApprovTextField, JTable listeApprovisionnementTable) {
+        int row = listeApprovisionnementTable.getSelectedRow();
+        int column = listeApprovisionnementTable.getSelectedColumn();
+
+        Produit produitSelectionne = (Produit) idProdJComboBox.getSelectedItem();
+
+        // On vérifie si l'utilisateur a cliqué sur la colonne "Select" (index 5)
+        if (row != -1 && column == 5) {
+            /*Récupérer l'ID stocké dans la cellule sélectionnée
+            Note: Comme on a défini la classe Boolean, on récupère l'ID via la liste ou un ID caché
+             Si vous avez remplacé l'ID par le Boolean, récupérons l'ID de l'objet */
+
+            List<Approvisionnement> laListe = new Approvisionnement().trouverTout();
+            Long idSelectionne = laListe.get(row).getIdApprov();
+            // Retrouver l'objet complet
+            Approvisionnement approv = new Approvisionnement().trouverUn(idSelectionne);
+            // Remplir les champs du formulaire 
+            idProdJComboBox.setSelectedItem(produitSelectionne);
+            qteApprovTextField.setText(String.valueOf(approv.getQteApprov()));
+            prixApprovTextField.setText(String.valueOf(approv.getPrixAchatApprov()));
+            dateApprovDateChooser.setDate(approv.getDateAppov()); // Si vous utilisez un JDateChooser
+        }
+
+    }
+
+    //
+    public static Approvisionnement modifierUneLigne(JComboBox<Produit> idProdJComboBox, JDateChooser dateApprovDateChooser, JTextField qteApprovTextField,
+            JTextField prixApprovTextField, JTable listeApprovisionnementTable) {
+        Approvisionnement approvO = new Approvisionnement();
+
+        int row = listeApprovisionnementTable.getSelectedRow();
+        int column = listeApprovisionnementTable.getSelectedColumn();
+
+        Produit produitSelectionne = (Produit) idProdJComboBox.getSelectedItem();
+        //
+
+        // On vérifie si l'utilisateur a cliqué sur la colonne "Select" (index 5)
+        if (row != -1 && column == 5) {
+
+            List<Approvisionnement> laListe = new Approvisionnement().trouverTout();
+            Long idSelectionne = laListe.get(row).getIdApprov();
+            //
+            Approvisionnement appov = new Approvisionnement().trouverUn(idSelectionne);
+            Produit prodOO = new Produit().trouverUn(produitSelectionne.getIdProduit());
+            int stockProd = prodOO.getQteStockProduit();
+            int qteStock = appov.getQteApprov();
+            //
+            int nouveauStockProd = stockProd - qteStock;
+            
+            JOptionPane.showMessageDialog(null, stockProd +" - " +qteStock +" = "+nouveauStockProd);
+            
+            approvO.setDateAppov(dateApprovDateChooser.getDate());
+            approvO.setQteApprov(Integer.parseInt(qteApprovTextField.getText()));
+            approvO.setPrixAchatApprov(Double.parseDouble(prixApprovTextField.getText()));
+            approvO.setIdProdApprov(produitSelectionne);
+
+            Approvisionnement approvMod = new Approvisionnement();
+            approvO = approvMod.modifierUneLigne(approvO, idSelectionne);
+            //
+           
+            int nouveauStock =nouveauStockProd  + Integer.parseInt(qteApprovTextField.getText());
+            //
+            prodOO.setQteStockProduit(nouveauStock);
+
+            // Mettre à jour dans la base
+            Produit produitModifie = prodOO.modifierUneLigne(prodOO, prodOO.getIdProduit());
+            if (produitModifie == null) {
+                JOptionPane.showMessageDialog(null,
+                        "Erreur lors de la mise à jour du stock pour : " + prodOO.getNomProduit());
+            }
+
+        }
+        if (approvO == null) {
+            JOptionPane.showMessageDialog(null, "Echec .........");
+        } else {
+            JOptionPane.showMessageDialog(null, "L'approvisionnnement est modifier avec succès");
         }
 
         return approvO;

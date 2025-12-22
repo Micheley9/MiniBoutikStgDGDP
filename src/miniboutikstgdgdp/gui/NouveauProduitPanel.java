@@ -120,6 +120,11 @@ public class NouveauProduitPanel extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        listeProduitTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listeProduitTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(listeProduitTable);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -398,13 +403,8 @@ public class NouveauProduitPanel extends javax.swing.JPanel {
 
     private void sauvegadeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sauvegadeButtonActionPerformed
 
-//setPdtO(NouveauProduitPanelControleurMonoTbl.creationProduit(nomProduitTextField, codeProduitTextField, prixProduitTextField, quantiteProduitTextField, fabricantProduitTextField, fournisseurProdTextField, categorieProduitComboBox));
 //
-        Categorie categorieSelectionnee = (Categorie) categorieProduitComboBox.getSelectedItem();
-        int idCatAInserer = categorieSelectionnee.getIdCategorie();
-
-//
-        setPdtO(NouveauProduitPanelControleurMonoTbl.insertionProduit(nomProduitTextField, codeProduitTextField, prixProduitTextField, quantiteProduitTextField, fabricantProduitTextField, descriptionTextArea, idCatAInserer));
+        setPdtO(NouveauProduitPanelControleurMonoTbl.insertionProduit(nomProduitTextField, codeProduitTextField, prixProduitTextField, quantiteProduitTextField, fabricantProduitTextField, descriptionTextArea, categorieProduitComboBox));
         NouveauProduitPanelControleurMonoTbl.afficageSurTable(listeProduitTable);
     }//GEN-LAST:event_sauvegadeButtonActionPerformed
 
@@ -445,6 +445,11 @@ public class NouveauProduitPanel extends javax.swing.JPanel {
     private void RechercheTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RechercheTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_RechercheTextFieldActionPerformed
+
+    private void listeProduitTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listeProduitTableMouseClicked
+        // TODO add your handling code here:
+        NouveauProduitPanelControleurMonoTbl.tableClicked(nomProduitTextField, codeProduitTextField, prixProduitTextField, quantiteProduitTextField, fabricantProduitTextField, descriptionTextArea, categorieProduitComboBox, listeProduitTable);
+    }//GEN-LAST:event_listeProduitTableMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField RechercheTextField;

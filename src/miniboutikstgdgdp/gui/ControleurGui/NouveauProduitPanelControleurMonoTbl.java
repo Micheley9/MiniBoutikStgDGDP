@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import miniboutikstgdgdp.entitys.Approvisionnement;
 import miniboutikstgdgdp.entitys.Categorie;
 import miniboutikstgdgdp.entitys.Produit;
 import miniboutikstgdgdp.entitys.Produits;
@@ -109,13 +110,12 @@ public class NouveauProduitPanelControleurMonoTbl {
     }
 
     public static Produit insertionProduit(JTextField nomProdTextField, JTextField codeProdTextField, JTextField prixProdTextField,
-            JTextField qteProdTextField, JTextField fabicantProTextField, JTextArea descrpritionTextArea, int idCategorieSelectionnee) {
+            JTextField qteProdTextField, JTextField fabicantProTextField, JTextArea descrpritionTextArea, JComboBox<Categorie> idCategorieComboBox) {
         double prixProd = Double.parseDouble(prixProdTextField.getText());
         int qteProd = Integer.parseInt(qteProdTextField.getText());
         //
 
-        Categorie categoriePourInsertion = new Categorie();
-        categoriePourInsertion.setIdCategorie(idCategorieSelectionnee);
+        Categorie idCategoriProd = (Categorie) idCategorieComboBox.getSelectedItem();
         //
         Produit prodO = new Produit();
         //
@@ -123,7 +123,7 @@ public class NouveauProduitPanelControleurMonoTbl {
         prodO.setIdProduit(idProd);
         prodO.setNomProduit(nomProdTextField.getText());
         prodO.setCodeProduit(codeProdTextField.getText());
-        prodO.setIdCategorieProduit(categoriePourInsertion);
+        prodO.setIdCategorieProduit(idCategoriProd);
         prodO.setPrixProdduit(prixProd);
         prodO.setQteStockProduit(qteProd);
         prodO.setFabricantProduit(fabicantProTextField.getText());
@@ -165,7 +165,7 @@ public class NouveauProduitPanelControleurMonoTbl {
         //
         try {
             String requete = "SELECT idProduit, nomProduit, codeProduit, prixProdduit, qteStockProduit, fabricantProduit, descriptionProduit,idCategorieProduit "
-                    + "FROM produit WHERE nomProduit = '"+rechercheTextField.getText()+"'";
+                    + "FROM produit WHERE nomProduit = '" + rechercheTextField.getText() + "'";
             MaConnexionBD konex = new MaConnexionBD();
             konex.ouvrirConnexion();
             ResultSet rs = konex.ExecuteurdeRequeteSelect(requete);
@@ -178,7 +178,7 @@ public class NouveauProduitPanelControleurMonoTbl {
                 qteProdTextField.setText(rs.getString("qteStockProduit"));
                 fabicantProTextField.setText(rs.getString("fabricantProduit"));
                 descrpritionTextArea.setText(rs.getString("descriptionProduit"));
-                idCategorieSelectionnee = rs.getInt("idCategorieProduit"); 
+                idCategorieSelectionnee = rs.getInt("idCategorieProduit");
                 IdentifiantProd.setText(rs.getString("idProduit"));
 
                 //
@@ -190,20 +190,51 @@ public class NouveauProduitPanelControleurMonoTbl {
         }
 
     }
+
     public static void suppressionProduit(JLabel identifiant) {
-         try {
+        try {
             String requeteSql = "DELETE FROM produit WHERE  idProduit= " + identifiant.getText();
             MaConnexionBD konxi = new MaConnexionBD();
             konxi.ouvrirConnexion();
             int execReq = konxi.ExecuteurdeRequeteUpdate(requeteSql);
             if (execReq > 0) {
-              JOptionPane.showMessageDialog(null, "suppression reussie !!"   );
+                JOptionPane.showMessageDialog(null, "suppression reussie !!");
             } else {
-              JOptionPane.showMessageDialog(null, "Erreur lors de la suppression !!");
+                JOptionPane.showMessageDialog(null, "Erreur lors de la suppression !!");
             }
             konxi.fermetureConnexion();
-             } catch (Exception e) {
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erreur dans Produit, trouverUn : \n" + e.getMessage());
+        }
+
+    }
+
+    public static void tableClicked(JTextField nomProdTextField, JTextField codeProdTextField, JTextField prixProdTextField,
+            JTextField qteProdTextField, JTextField fabicantProTextField, JTextArea descrpritionTextArea, JComboBox<Categorie> idCategorieComboBox, JTable listeProduitTable) {
+        int row = listeProduitTable.getSelectedRow();
+        int column = listeProduitTable.getSelectedColumn();
+
+        // On vérifie si l'utilisateur a cliqué sur la colonne "Select" (index 7)
+        if (row != -1 && column == 7) {
+            /*Récupérer l'ID stocké dans la cellule sélectionnée
+            Note: Comme on a défini la classe Boolean, on récupère l'ID via la liste ou un ID caché
+             Si vous avez remplacé l'ID par le Boolean, récupérons l'ID de l'objet */
+
+            List<Produit> laListe = new Produit().trouverTout();
+            Long idSelectionne = laListe.get(row).getIdProduit();
+            // Retrouver l'objet complet
+            Produit prodO = new Produit().trouverUn(idSelectionne);
+            // Remplir les champs du formulaire 
+            idCategorieComboBox.setSelectedItem(prodO.getIdCategorieProduit().getIdCategorie());
+            nomProdTextField.setText(prodO.getNomProduit());
+            codeProdTextField.setText(prodO.getCodeProduit());
+            descrpritionTextArea.setText(prodO.getDescriptionProduit());
+            fabicantProTextField.setText(prodO.getFabricantProduit());
+            prixProdTextField.setText(String.valueOf(prodO.getPrixProdduit()));
+            qteProdTextField.setText(String.valueOf(prodO.getQteStockProduit()));
+            
+            
+
         }
 
     }
