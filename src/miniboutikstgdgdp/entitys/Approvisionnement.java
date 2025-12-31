@@ -134,7 +134,23 @@ public class Approvisionnement extends ModeleOperationBD<Approvisionnement> {
 
     @Override
     public Approvisionnement supprimerUneLigne(Object cleO) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Approvisionnement approvO = new Approvisionnement();
+        try {
+            String requeteSql = "DELETE FROM approvionnement WHERE  idApprov= '" + cleO;
+            MaConnexionBD konxi = new MaConnexionBD();
+            konxi.ouvrirConnexion();
+            int execReq = konxi.ExecuteurdeRequeteUpdate(requeteSql);
+            if (execReq > 0) {
+                approvO.trouverUn(cleO);
+            } else {
+                approvO = null;
+            }
+            konxi.fermetureConnexion();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erreur dans Approvisionnement : supprimerUneLigne\n" + e.getMessage());
+        }
+        return approvO;
     }
 
     @Override
